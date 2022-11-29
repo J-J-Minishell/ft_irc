@@ -1,0 +1,5 @@
+ft_irc
+*.swp
+*.o
+.vscode/
+obj/
