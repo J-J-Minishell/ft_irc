@@ -1,10 +1,11 @@
-NAME 		= 	ft_irc
-CXX 		= 	clang++
-CXXFLAGS 	= 	-Werror -Wall -Wextra -I$(INCL) -std=c++98 
-INCL 		= 	./includes/
-OBJSPATH 	= 	obj/
+NAME		=	ft_irc
+CXX			=	clang++
+CXXFLAGS	=	-Werror -Wall -Wextra -I$(INCL) -std=c++98
+INCL		=	./includes/
+OBJSPATH	=	obj/
 SRCSPATH	=	srcs/
 SERVEROBJS	=	$(patsubst $(SRCSPATH)%, $(OBJSPATH)%, $(SRCS:.cpp=.o))
+DEBUG_FLAGS	=	-g3 -fstandalone-debug
 
 -include	sources.mk
 
@@ -17,6 +18,9 @@ $(OBJSPATH)%.o:	$(SRCSPATH)%.cpp
 $(NAME):	$(SERVEROBJS)
 	$(CXX) -o $@ $^
 
+debug: CXXFLAGS += $(DEBUG_FLAGS)
+debug: $(NAME)
+
 clean :
 	rm -f *.o
 		rm -f srcs/*.o
@@ -28,4 +32,4 @@ fclean : clean
 
 re: fclean all
 
-.PHONY: clean fclean all re
+.PHONY: clean fclean all re debug

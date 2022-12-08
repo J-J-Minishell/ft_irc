@@ -1,6 +1,4 @@
-#include "Server.hpp"
-#include <stdlib.h>
-#include <iostream>
+#include "main.hpp"
 
 int main(int argc, char **argv)
 {

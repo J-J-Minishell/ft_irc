@@ -1,11 +1,7 @@
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-# include <netinet/in.h>
-# include <poll.h>
-# include <unistd.h>
-
-# define MAXUSERS			10
+# include "main.hpp"
 
 class Server
 {
@@ -14,21 +10,26 @@ class Server
 		static void			deleteInstance(void);
 		void				run(void);
 
+		UserMap	&			getUserMap() { return _usersMap; };
+
 	private:
 		Server(const char *port);
 		~Server(void);
 
-		static Server *		_instance;
-		int					_fd;
-		const char *		_port;
-		struct addrinfo *	_server_info;
-		struct pollfd		_pollfds[MAXUSERS + 2];
-		int					_numPollfds;
+		static Server *			_instance;
+		int						_fd;
+		const char *			_port;
+		struct addrinfo *		_server_info;
+		struct pollfd			_pollfds[MAXUSERS + 2];
+		int						_numPollfds;
+
+		UserMap					_usersMap;
 
 		void	_prepareSocket(void);
 		void	_getAddrinfoStruct(void);
 		void	_checkConnection(void);
 		void	_checkInputs(void);
+		void	_checkCommand(std::string line);
 };
 
 #endif

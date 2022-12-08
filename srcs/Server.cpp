@@ -1,16 +1,5 @@
 #include "Server.hpp"
 
-#include <iostream>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <fcntl.h>
-#include <string.h>
-
-#include <cstdio>
-
-
 Server*	Server::_instance = NULL;
 
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
@@ -139,61 +128,46 @@ void	Server::_checkConnection(void)
 		this->_pollfds[this->_numPollfds].fd = new_fd;
 		this->_pollfds[this->_numPollfds].events = POLLIN;
 		this->_numPollfds++;
+		this->_usersMap.insert(std::make_pair(new_fd, new User(new_fd, *this)));
 		std::cout << "Cliente conectado con fd " << new_fd << std::endl;
 	}
 }
 
-int		tmpManageInputs(int i, pollfd *pollfds, int numPollfds)
-{
-	int bytes_read;
-	char buffer[255 + 1];
-	std::string text;
-	std::string printLine;
-	int exitCode = 0;
-
-	printLine = "usuario con fd ";
-	snprintf(buffer, sizeof(buffer), "%d", pollfds[i].fd);
-	printLine += buffer;
-
-	bytes_read = recv(pollfds[i].fd, buffer, sizeof(buffer), 0);
-	if (bytes_read > 0)
-	{
-		buffer[bytes_read] = '\0';
-		text = buffer;
-		std::cout << text << std::endl;
-
-		if (text.substr(0, text.find("\r")).compare("exit") != 0)
-		{
-			printLine += " dice: ";
-			printLine += text;
-		}
-	}
-	if (bytes_read == 0 || (text.substr(0, text.find("\r")).compare("exit") == 0))
-	{
-		std::cout << "Cliente desconectado con fd " << pollfds[i].fd << std::endl;
-		printLine += " ha cerrado la sesión.\n";
-		exitCode = 1;
-	}
-	for (int j = 1; j < numPollfds; j++)
-	{
-		if (i != j)
-			send(pollfds[j].fd, printLine.c_str(), printLine.size(), 0);
-	}
-	return exitCode;
-}
-
 void	Server::_checkInputs(void)
 {
+	User *	userTalking;
+	int	bytesRecieved;
+
 	for (int i = 1; i < this->_numPollfds; i++)
 	{
 		if (this->_pollfds[i].revents & POLLIN)
 		{
-			if (tmpManageInputs(i, this->_pollfds, _numPollfds))
+			userTalking = _usersMap.find(_pollfds[i].fd)->second;
+			bytesRecieved = userTalking->recv_line(userTalking->get_fd());
+			if (bytesRecieved < 0)
 			{
-				close(this->_pollfds[i].fd);
+				std::cerr << "Error, function recv() failed" << std::endl;
+				return ;
+			}
+			else if (bytesRecieved > 0)
+			{
+				_checkCommand(userTalking->get_bufferLine());
+				//std::cout << "envia: " << userTalking->get_bufferLine() << std::endl;
+				if (userTalking->get_bufferLine() != "\r\n")
+					userTalking->send_line(_usersMap);
+			}
+			else
+			{
 				this->_pollfds[i].fd = this->_pollfds[i -1].fd;
 				this->_numPollfds--;
+				_usersMap.erase(userTalking->get_fd());
+				delete userTalking;
 			}
 		}
 	}
+}
+
+void	Server::_checkCommand(std::string line)
+{
+	line = "";
 }
