@@ -10,14 +10,18 @@
 
 # include <poll.h>
 # include <netinet/in.h>
+# include <arpa/inet.h>
 # include <netdb.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/socket.h>
 
 
-# define MAXUSERS			10
-# define MAXBUFFER			255
+# define MAXUSERS		10
+# define MAXBUFFER		255
+
+# define RESET_COLOR	"\033[0m"
+# define MASK_BLUE		"\033[1;34m"
 
 class Server;
 class User;

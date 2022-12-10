@@ -9,10 +9,17 @@ class User
 		User(int fd, Server& server);
 		~User();
 
-		int			get_fd() { return this->_fd; };
-		std::string	get_bufferLine() { return this->_bufferLine; };
+		int				get_fd() const { return this->_fd; };
+		std::string				get_bufferLine() const { return this->_bufferLine; };
+		const std::string		get_nick() const { return this->_nick; };
+		const std::string		get_username() const { return this->_username; };
+		const std::string		get_host() const { return this->_username; };
+		
+		const std::string&	get_mask(void) const { return this->_mask; };
 
-		int		recv_line(int fd);
+		void	setHost(const std::string& value);
+
+		int		recv_line();
 		void	send_line(UserMap &usersList);
 
 		int		manage_IO();
@@ -22,12 +29,19 @@ class User
 		User(const User& src);
 		User&	operator=(const User& rhs);
 
-		int		send_all(int fd, const void* buffer, size_t length);
+		int		_send_all(int fd, const void* buffer, size_t length);
+
+		void	_updateMask(void);
 
 		int				_fd;
 		Server &		_server;
+		std::string		_mask;
 		std::string		_nick;
+		std::string		_username;
+		std::string		_host;
 		std::string		_bufferLine;
 };
+
+std::ostream	&operator<<(std::ostream &out, User &rhs);
 
 #endif

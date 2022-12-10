@@ -34,6 +34,8 @@ void	Server::deleteInstance(void)
 
 void	Server::run(void)
 {
+	int	numEvents;
+
 	if (listen(this->_fd, MAXUSERS) < 0)
 	{
 		std::cerr << "Error, listen() failed" << std::endl;
@@ -41,8 +43,7 @@ void	Server::run(void)
 	}
 	this->_pollfds[0].fd = this->_fd;
 	this->_pollfds[0].events = POLLIN;
-
-	int	numEvents;
+	std::cout << "Waiting for connections in " << inet_ntoa(this->_sockaddr_in->sin_addr) << std::endl;
 	while (1)
 	{
 		numEvents = poll(this->_pollfds, MAXUSERS + 2, 1000);
@@ -78,6 +79,8 @@ void	Server::_getAddrinfoStruct()
 		std::cerr << "Error, getaddrinfo() failed" << std::endl;
 		exit(EXIT_FAILURE);
 	}
+
+	this->_sockaddr_in = reinterpret_cast<struct sockaddr_in*>(this->_server_info->ai_addr);
 }
 
 void	Server::_prepareSocket()
@@ -129,38 +132,36 @@ void	Server::_checkConnection(void)
 		this->_pollfds[this->_numPollfds].events = POLLIN;
 		this->_numPollfds++;
 		this->_usersMap.insert(std::make_pair(new_fd, new User(new_fd, *this)));
-		std::cout << "Cliente conectado con fd " << new_fd << std::endl;
+		this->_usersMap.find(new_fd)->second->setHost(inet_ntoa(this->_sockaddr_in->sin_addr));
+		std::cout << "Cliente conectado " << *(this->_usersMap.find(new_fd)->second) << std::endl;
 	}
 }
 
 void	Server::_checkInputs(void)
 {
 	User *	userTalking;
-	int	bytesRecieved;
 
 	for (int i = 1; i < this->_numPollfds; i++)
 	{
 		if (this->_pollfds[i].revents & POLLIN)
 		{
 			userTalking = _usersMap.find(_pollfds[i].fd)->second;
-			bytesRecieved = userTalking->recv_line(userTalking->get_fd());
-			if (bytesRecieved < 0)
+			if (userTalking->recv_line() > 0)
 			{
-				std::cerr << "Error, function recv() failed" << std::endl;
-				return ;
-			}
-			else if (bytesRecieved > 0)
-			{
-				_checkCommand(userTalking->get_bufferLine());
-				//std::cout << "envia: " << userTalking->get_bufferLine() << std::endl;
-				if (userTalking->get_bufferLine() != "\r\n")
+				if (!userTalking->get_bufferLine().empty() && 
+					userTalking->get_bufferLine().find("\r\n") != std::string::npos)
+				{
+					_checkCommand(userTalking->get_bufferLine());
+					std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
 					userTalking->send_line(_usersMap);
+				}
 			}
 			else
 			{
+				std::cout << *userTalking << " is leaving." << std::endl;
 				this->_pollfds[i].fd = this->_pollfds[i -1].fd;
 				this->_numPollfds--;
-				_usersMap.erase(userTalking->get_fd());
+				_usersMap.erase(userTalking->get_fd());  
 				delete userTalking;
 			}
 		}
