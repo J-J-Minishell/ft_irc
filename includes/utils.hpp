@@ -4,7 +4,8 @@
 # include <string>
 # include <sstream>
 
-void            leftTrim(std::string& str);
-std::string     to_string(long nb);
+std::string		extractWord(std::string& data);
+void			leftTrim(std::string& str);
+std::string		to_string(long nb);
 
 #endif

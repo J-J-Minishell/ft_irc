@@ -10,7 +10,7 @@ class User
 		~User();
 
 		int				get_fd() const { return this->_fd; };
-		std::string				get_bufferLine() const { return this->_bufferLine; };
+		std::string &			get_bufferLine() { return this->_bufferLine; };
 		const std::string		get_nick() const { return this->_nick; };
 		const std::string		get_username() const { return this->_username; };
 		const std::string		get_host() const { return this->_username; };
@@ -21,6 +21,8 @@ class User
 
 		int		recv_line();
 		void	send_line(UserMap &usersList);
+
+		bool	make_message();
 
 		int		manage_IO();
 
@@ -35,6 +37,7 @@ class User
 
 		int				_fd;
 		Server &		_server;
+		Message	*		_message;
 		std::string		_mask;
 		std::string		_nick;
 		std::string		_username;

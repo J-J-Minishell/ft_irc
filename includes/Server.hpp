@@ -10,7 +10,8 @@ class Server
 		static void			deleteInstance(void);
 		void				run(void);
 
-		UserMap	&			getUserMap() { return _usersMap; };
+		UserMap	&			getUserMap() { return this->_usersMap; };
+		cmdMap	&			getCmdMap() { return this->_cmdMap; };
 
 	private:
 		Server(const char *port);
@@ -25,9 +26,11 @@ class Server
 		int						_numPollfds;
 
 		UserMap					_usersMap;
+		cmdMap					_cmdMap;
 
 		void	_prepareSocket(void);
 		void	_getAddrinfoStruct(void);
+		void	_fillCmdMap(void);
 		void	_checkConnection(void);
 		void	_checkInputs(void);
 		void	_checkCommand(std::string line);

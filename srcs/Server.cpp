@@ -9,6 +9,8 @@ Server::Server(const char *port) : _port(port), _numPollfds(1)
 	memset(this->_pollfds, '\0', sizeof(struct pollfd) * (MAXUSERS + 2));
 	this->_getAddrinfoStruct();
 	this->_prepareSocket();
+
+	this->_fillCmdMap();
 }
 
 Server::~Server(void)
@@ -64,6 +66,12 @@ void	Server::run(void)
 /*  /////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	////////////////////////////////////  PRIVATE METHODS  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
 	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////////////////////////// */
+
+void	Server::_fillCmdMap()
+{
+//	_cmdMap["NICK"] = &nick_cmd;
+//	_cmdMap["EXIT"] = &server_cmd;
+}
 
 void	Server::_getAddrinfoStruct()
 {
@@ -139,7 +147,8 @@ void	Server::_checkConnection(void)
 
 void	Server::_checkInputs(void)
 {
-	User *	userTalking;
+	User *		userTalking;
+	Message*	message;
 
 	for (int i = 1; i < this->_numPollfds; i++)
 	{
@@ -151,7 +160,9 @@ void	Server::_checkInputs(void)
 				if (!userTalking->get_bufferLine().empty() && 
 					userTalking->get_bufferLine().find("\r\n") != std::string::npos)
 				{
-					_checkCommand(userTalking->get_bufferLine());
+					message = new Message(*this, *userTalking);
+
+					//_checkCommand(*userTalking);
 					std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
 					userTalking->send_line(_usersMap);
 				}

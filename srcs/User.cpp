@@ -3,7 +3,9 @@
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
 User::User(int fd, Server& server) : _fd(fd), _server(server), _username("unknown")
-{}
+{
+	this->_message = new Message(_server, *this);
+}
 
 User::~User()
 {
