@@ -69,7 +69,7 @@ void	Server::run(void)
 
 void	Server::_fillCmdMap()
 {
-//	_cmdMap["NICK"] = &nick_cmd;
+	_cmdMap["NICK"] = &nick_cmd;
 //	_cmdMap["EXIT"] = &server_cmd;
 }
 
@@ -158,13 +158,11 @@ void	Server::_checkInputs(void)
 			if (userTalking->recv_line() > 0)
 			{
 				if (!userTalking->get_bufferLine().empty() && 
-					userTalking->get_bufferLine().find("\r\n") != std::string::npos)
+					userTalking->get_bufferLine().find("\r\n") != std::string::npos) // para nc sólo "\n", resto (telnet) "\r\n"
 				{
-					message = new Message(*this, *userTalking);
-
-					//_checkCommand(*userTalking);
 					std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
-					userTalking->send_line(_usersMap);
+					message = new Message(*this, *userTalking);
+					delete message;
 				}
 			}
 			else
@@ -177,9 +175,4 @@ void	Server::_checkInputs(void)
 			}
 		}
 	}
-}
-
-void	Server::_checkCommand(std::string line)
-{
-	line = "";
 }

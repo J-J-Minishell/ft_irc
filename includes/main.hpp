@@ -40,7 +40,8 @@ class Message;
 #include "Message.hpp"
 #include "utils.hpp"
 
-std::string	to_string(long nb);
+std::string		to_string(long nb);
+void			nick_cmd(Message &message);
 
 
 #endif
