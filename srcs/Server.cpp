@@ -168,11 +168,22 @@ void	Server::_checkInputs(void)
 			else
 			{
 				std::cout << *userTalking << " is leaving." << std::endl;
-				this->_pollfds[i].fd = this->_pollfds[i -1].fd;
+				this->_relocate_poll(i);
 				this->_numPollfds--;
 				_usersMap.erase(userTalking->get_fd());  
 				delete userTalking;
 			}
 		}
 	}
+}
+
+void	Server::_relocate_poll(int i)
+{
+	if (i < (this->_numPollfds - 1))
+	{
+		this->_pollfds[i].fd = this->_pollfds[i + 1].fd;
+		this->_relocate_poll(++i);
+	}
+	else
+		this->_pollfds[i].fd = -1;
 }

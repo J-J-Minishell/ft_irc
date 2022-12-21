@@ -34,6 +34,7 @@ class Server
 		void	_checkConnection(void);
 		void	_checkInputs(void);
 		void	_checkCommand(std::string line);
+		void	_relocate_poll(int i);
 };
 
 #endif

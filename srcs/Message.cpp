@@ -29,7 +29,7 @@ void	Message::set_message(std::string line)
 	while (!line.empty())
 	{
 		param = extractWord(line);
-		param = param.substr(0, param.find("\n"));
+		param = param.substr(0, param.find("\r\n")); // para nc sólo "\n", resto (telnet) "\r\n"
 		this->_params.push_back(param);
 	}
 }
