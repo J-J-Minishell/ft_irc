@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-void	nick_cmd(Message &message)
+int		nick_cmd(Message &message)
 {
 	User &user = message.get_user();
 	std::string line;
@@ -11,4 +11,5 @@ void	nick_cmd(Message &message)
 	user.set_nick(message.get_params().front());
 	
 	user.updateMask();
+	return 0;
 }

@@ -21,6 +21,7 @@ int		User::recv_line()
 		buffer[bytesRecieved] = '\0';
 		this->_bufferLine += buffer;
 		leftTrim(this->_bufferLine);
+		cleanSignalsFromStr(this->_bufferLine);
 		if (this->_bufferLine == "\r\n") // para nc solo "\n", resto (telnet) "\r\n"
 			this->_bufferLine.clear();
 		return bytesRecieved;
@@ -33,18 +34,6 @@ int		User::recv_line()
 	}
 	return 0;
 }
-
-/*
-void	User::send_line(UserMap &usersList)
-{
-	for (UserMapIterator it = usersList.begin(); it != usersList.end(); it++)
-	{
-		if (this->_fd != it->second->_fd)
-			_send_all(it->second->_fd, this->_bufferLine.c_str(), this->_bufferLine.length());
-	}
-	this->_bufferLine.clear();
-}
-*/
 
 void	User::setHost(const std::string& value)
 {

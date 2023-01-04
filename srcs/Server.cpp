@@ -4,7 +4,7 @@ Server*	Server::_instance = NULL;
 
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
-Server::Server(const char *port) : _port(port), _numPollfds(1)
+Server::Server(const char *port) : _port(port), _numPollfds(1), _serverName("irc-server")
 {
 	memset(this->_pollfds, '\0', sizeof(struct pollfd) * (MAXUSERS + 2));
 	this->_getAddrinfoStruct();
@@ -70,6 +70,7 @@ void	Server::run(void)
 void	Server::_fillCmdMap()
 {
 	_cmdMap["NICK"] = &nick_cmd;
+	_cmdMap["USER"] = &user_cmd;
 //	_cmdMap["EXIT"] = &server_cmd;
 }
 

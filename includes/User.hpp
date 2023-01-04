@@ -15,6 +15,7 @@ class User
 		const std::string		get_nick() const { return this->_nick; };
 		void					set_nick(std::string newNick) {	this->_nick = newNick; };
 		const std::string		get_username() const { return this->_username; };
+		void					set_username(std::string newUsername) { this->_username = newUsername; };
 		const std::string		get_host() const { return this->_username; };
 
 		void				updateMask(void);
@@ -23,7 +24,6 @@ class User
 		void	setHost(const std::string& value);
 
 		int		recv_line();
-	//	void	send_line(UserMap &usersList);
 
 	private:
 		User(void);

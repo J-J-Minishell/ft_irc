@@ -12,6 +12,7 @@ class Server
 
 		UserMap	&			getUserMap() { return this->_usersMap; };
 		cmdMap	&			getCmdMap() { return this->_cmdMap; };
+		std::string			getServerName() const { return this->_serverName; };
 
 	private:
 		Server(const char *port);
@@ -24,6 +25,7 @@ class Server
 		struct sockaddr_in *	_sockaddr_in;
 		struct pollfd			_pollfds[MAXUSERS + 2];
 		int						_numPollfds;
+		std::string				_serverName;
 
 		UserMap					_usersMap;
 		cmdMap					_cmdMap;

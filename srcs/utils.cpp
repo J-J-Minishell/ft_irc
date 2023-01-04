@@ -45,6 +45,22 @@ void	leftTrim(std::string& str)
 	str.erase(0, i);
 }
 
+std::string	strToUpper(std::string str)
+{
+	for (size_t i = 0; i < str.size(); i++)
+		if (str[i] >= 'a' && str[i] <= '~')
+			str[i] -= 32;
+	return str;
+}
+
+void	cleanSignalsFromStr(std::string &str)
+{
+	size_t		pos;
+
+	while ((pos = str.find(4)) != std::string::npos)
+		str.erase(pos);
+}
+
 std::string	to_string(long nb)
 {
 	std::ostringstream	oss;

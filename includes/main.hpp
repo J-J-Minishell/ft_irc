@@ -26,22 +26,25 @@
 # define RESET_COLOR	"\033[0m"
 # define MASK_BLUE		"\033[1;34m"
 
+# define SERVER_VERSION "irc-0.1"
+
 class Server;
 class User;
 class Message;
 
 	typedef std::map<int, User*>		UserMap;
 	typedef UserMap::iterator			UserMapIterator;
-	typedef std::map<std::string, void (*)(Message &)>		cmdMap;
+	typedef std::map<std::string, int (*)(Message &)>		cmdMap;
 
 
 #include "Server.hpp"
 #include "User.hpp"
+#include "numerics.hpp"
 #include "Message.hpp"
 #include "utils.hpp"
 
-std::string		to_string(long nb);
-void			nick_cmd(Message &message);
+int				nick_cmd(Message &message);
+int				user_cmd(Message &message);
 
 
 #endif
