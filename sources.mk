@@ -4,8 +4,8 @@ BASE_SRCS		=	\
 					Server.cpp					\
 					User.cpp					\
 					Message.cpp					\
-					nick_cmd.cpp				\
-					user_cmd.cpp				\
+					cmd_nick.cpp				\
+					cmd_user.cpp				\
 					utils.cpp
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRCS))														
