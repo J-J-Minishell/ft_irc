@@ -22,6 +22,9 @@
 # define MAXBUFFER		255
 
 # define MAXNICKLENGTH	9
+# define REGTIMEOUT		30
+# define PINGTIMEOUT	10
+# define TIMEOUT		20
 
 # define RESET_COLOR	"\033[0m"
 # define MASK_BLUE		"\033[1;34m"
@@ -43,8 +46,11 @@ class Message;
 #include "Message.hpp"
 #include "utils.hpp"
 
-int				nick_cmd(Message &message);
-int				user_cmd(Message &message);
+int				cmd_nick(Message &message);
+int				cmd_user(Message &message);
+int				cmd_ping(Message &message);
+int				cmd_pong(Message &message);
+int				cmd_quit(Message &message);
 
 
 #endif

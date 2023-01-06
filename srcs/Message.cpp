@@ -50,7 +50,7 @@ int	Message::error(std::string numeric, std::string numericStr)
 	std::string	line;
 
 	line = prefix + numeric + this->_user.get_nick() + " " + numericStr + "\n";
-	send_all(this->_user.get_fd(), line.c_str(), line.size());
+	send_all(this->_user.get_fd(), line.c_str());
 
 	return -1;
 }
@@ -60,7 +60,7 @@ void Message::_send(std::vector<User *> userVector)
 	for (std::vector<User *>::iterator it = userVector.begin(); it != userVector.end(); it++)
 	{
 		if (this->_user.get_fd() != (*it)->get_fd())
-			send_all((*it)->get_fd(), this->_lineToSend.c_str(), this->_lineToSend.size());
+			send_all((*it)->get_fd(), this->_lineToSend.c_str());
 	}
 }
 

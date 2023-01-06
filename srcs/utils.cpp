@@ -17,12 +17,15 @@ std::string	extractWord(std::string& data)
 	return newStr;
 }
 
-int		send_all(int fd, const void* buffer, size_t length)
+int		send_all(int fd, const char* buffer)
 {
 	const char*	ptr;
 	int			num_bytes;
+	size_t		length = 0;
 
 	ptr = (const char*) buffer;
+	while (buffer && buffer[length] != '\0')
+		length++;
 	while (length > 0)
 	{
 		num_bytes = send(fd, ptr, length, 0);

@@ -3,7 +3,12 @@
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
 User::User(int fd, Server& server) : _fd(fd), _server(server), _nick("unknown"), _username("unknown")
-{}
+{
+	this->_registered = false;
+	this->_password = false;
+	this->_registTime = time(NULL);
+	this->_timeout = 0;
+}
 
 User::~User()
 {
@@ -29,7 +34,7 @@ int		User::recv_line()
 	else if (bytesRecieved < 0)
 	{
 		std::cerr << "Error, function recv() failed" << std::endl;
-		send_all(this->_fd, "Error, function recv() failed, leaving the server.", 51);
+		send_all(this->_fd, "Error, function recv() failed, leaving the server.");
 		return -1;
 	}
 	return 0;

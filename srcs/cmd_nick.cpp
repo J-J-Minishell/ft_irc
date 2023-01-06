@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		nick_cmd(Message &message)
+int		cmd_nick(Message &message)
 {
 	User &user = message.get_user();
 	std::string line;

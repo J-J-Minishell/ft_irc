@@ -59,8 +59,27 @@ void	Server::run(void)
 			this->_checkConnection();
 			this->_checkInputs();
 		}
-
+		for (UserMapIterator it = this->_usersMap.begin(); this->_usersMap.size() && it != this->_usersMap.end(); it++)
+			if (it->second != NULL)
+				this->_checkTime(*it->second);
 	}
+}
+
+int		Server::findPollindex(User &user)
+{
+	for (int i = 0; i < this->_numPollfds; i++)
+		if (this->_pollfds[i].fd == user.get_fd())
+			return i;
+	return -1;
+}
+
+void	Server::quitUser(User &user)
+{
+	std::cout << user << " is leaving." << std::endl;
+	this->_relocate_poll(findPollindex(user));
+	this->_numPollfds--;
+	_usersMap.erase(user.get_fd());
+	delete &user;
 }
 
 /*  /////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -69,8 +88,11 @@ void	Server::run(void)
 
 void	Server::_fillCmdMap()
 {
-	_cmdMap["NICK"] = &nick_cmd;
-	_cmdMap["USER"] = &user_cmd;
+	_cmdMap["NICK"] = &cmd_nick;
+	_cmdMap["USER"] = &cmd_user;
+	_cmdMap["PING"] = &cmd_ping;
+	_cmdMap["PONG"] = &cmd_pong;
+	_cmdMap["QUIT"] = &cmd_quit;
 //	_cmdMap["EXIT"] = &server_cmd;
 }
 
@@ -167,13 +189,35 @@ void	Server::_checkInputs(void)
 				}
 			}
 			else
-			{
-				std::cout << *userTalking << " is leaving." << std::endl;
-				this->_relocate_poll(i);
-				this->_numPollfds--;
-				_usersMap.erase(userTalking->get_fd());  
-				delete userTalking;
-			}
+				this->quitUser(*userTalking);
+		}
+	}
+}
+
+void	Server::_checkTime(User &user)
+{
+	std::string line;
+
+	if (user.isRegistered())
+	{
+		if (!user.get_timeout() && (user.get_time() + PINGTIMEOUT < time(NULL)))
+		{
+			user.set_timeout(time(NULL) + TIMEOUT);
+			send_all(user.get_fd(), "PING irc-serv\n");
+		}
+		else if (user.get_timeout() && user.get_timeout() < time(NULL))
+		{
+			line = "ERROR :Closing link: (" + user.get_username() + "@" + user.get_host() + ") [Ping timeout]\n";
+			send_all(user.get_fd(), line.c_str());
+			this->quitUser(user);
+		}
+	}
+	else
+	{
+		if ((user.get_registTime() + REGTIMEOUT) <= time(NULL))
+		{
+			send_all(user.get_fd(), "PONG ERROR [Registration timeout]\n");
+			this->quitUser(user);
 		}
 	}
 }

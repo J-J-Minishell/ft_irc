@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		user_cmd(Message &message)
+int		cmd_user(Message &message)
 {
 	User		&user = message.get_user();
 	std::string	numericStr;

@@ -13,6 +13,8 @@ class Server
 		UserMap	&			getUserMap() { return this->_usersMap; };
 		cmdMap	&			getCmdMap() { return this->_cmdMap; };
 		std::string			getServerName() const { return this->_serverName; };
+		int					findPollindex(User &user);
+		void				quitUser(User &user);
 
 	private:
 		Server(const char *port);
@@ -37,6 +39,7 @@ class Server
 		void	_checkInputs(void);
 		void	_checkCommand(std::string line);
 		void	_relocate_poll(int i);
+		void	_checkTime(User &user);
 };
 
 #endif
