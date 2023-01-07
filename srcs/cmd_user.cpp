@@ -11,12 +11,12 @@ int		cmd_user(Message &message)
 		{
 			numericStr = Message::numericsMap[ERR_NEEDMOREPARAMS];
 			numericStr.replace(numericStr.find("<command>"), 9, "USER");
-			return message.error(" 461 ", numericStr);
+			return message.send_numeric(" 461 ", numericStr);
 		}
 		user.set_username(message.get_params()[0]);
 	}
 	else
-		return message.error(" 462 ", Message::numericsMap[ERR_ALREADYREGISTRED]);
+		return message.send_numeric(" 462 ", Message::numericsMap[ERR_ALREADYREGISTRED]);
 
 	user.updateMask();
 	return 0;

@@ -45,7 +45,7 @@ void Message::set_message(std::string line)
 	}
 }
 
-int	Message::error(std::string numeric, std::string numericStr)
+int	Message::send_numeric(std::string numeric, std::string numericStr)
 {
 	std::string	line;
 
@@ -53,6 +53,20 @@ int	Message::error(std::string numeric, std::string numericStr)
 	send_all(this->_user.get_fd(), line.c_str());
 
 	return -1;
+}
+
+void	Message::welcome_user()
+{
+	std::string	line;
+
+	this->_user.set_registered(true);
+
+	line = this->numericsMap[RPL_WELCOME];
+	line.replace(line.find("<nick>!<user>@<host>"), 20, _user.get_mask());
+	send_numeric(" 001 ", line);
+	send_numeric(" 002 ", this->numericsMap[RPL_YOURHOST]);
+	send_numeric(" 003 ", this->numericsMap[RPL_CREATED]);
+	send_numeric(" 004 ", this->numericsMap[RPL_MYINFO]);
 }
 
 void Message::_send(std::vector<User *> userVector)
@@ -69,9 +83,9 @@ void Message::_initStaticVars()
 	prefix = ":" + _server.getServerName();
 
 	numericsMap[RPL_WELCOME] = "Welcome to the Internet Relay Network <nick>!<user>@<host>";
-	numericsMap[RPL_YOURHOST] = "Your host is <servername>, running version " SERVER_VERSION;
+	numericsMap[RPL_YOURHOST] = "Your host is " + this->_server.getServerName() + ", running version " SERVER_VERSION;
 	numericsMap[RPL_CREATED] = "This server was created " __TIME__ " " __DATE__;
-	numericsMap[RPL_MYINFO] = "<servername> <version> <available user modes> <available channel modes>";
+	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
 
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";

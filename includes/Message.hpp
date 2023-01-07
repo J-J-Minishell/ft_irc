@@ -20,8 +20,9 @@ class Message
 		std::string					get_cmd() { return this->_cmd; };
 		std::vector<std::string>	get_params() { return this->_params; };
 
+		void		welcome_user();
 		void		set_lineToSend(std::string line) { this->_lineToSend = line; };
-		int			error(std::string numeric, std::string numericStr);
+		int			send_numeric(std::string numeric, std::string numericStr);
 
 	private:
 		void		_send(std::vector<User *> userVector);
