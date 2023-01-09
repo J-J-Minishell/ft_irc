@@ -5,18 +5,26 @@ std::string					Message::prefix;
 
 Message::Message(Server &server, User &user) : _server(server), _user(user)
 {
+	std::string	line;
+	std::string	&bufferLine = this->_user.get_bufferLine();
+
 	if (numericsMap.empty())
 		this->_initStaticVars();
-	set_message(_user.get_bufferLine());
 
-	cmdMap::iterator it = this->_server.getCmdMap().find(strToUpper(this->_cmd));
-	if (it != this->_server.getCmdMap().end())
+	for (; !bufferLine.empty() ; bufferLine.erase(0, bufferLine.find("\r\n") + 2))
 	{
-		if (it->second(*this) == -1) // llama a la funcion especifica del comando _cmd
-			return;
+		line = bufferLine.substr(0, bufferLine.find("\r\n"));
+		set_message(line);
+
+		cmdMap::iterator it = this->_server.getCmdMap().find(strToUpper(this->_cmd));
+		if (it != this->_server.getCmdMap().end())
+		{
+			if (it->second(*this) == -1) // llama a la funcion especifica del comando _cmd
+				return;
+		}
+		else
+			this->_lineToSend = MASK_BLUE + this->_user.get_nick() + RESET_COLOR + ": " + this->_user.get_bufferLine();
 	}
-	else
-		this->_lineToSend = MASK_BLUE + this->_user.get_nick() + RESET_COLOR + ": " + this->_user.get_bufferLine();
 
 	// tmp
 	std::vector<User *> userVector;
@@ -35,12 +43,10 @@ void Message::set_message(std::string line)
 	std::string param;
 
 	this->_cmd = extractWord(line);
-	this->_cmd = this->_cmd.substr(0, this->_cmd.find("\r\n"));
 
 	while (!line.empty())
 	{
 		param = extractWord(line);
-		param = param.substr(0, param.find("\r\n")); // para nc sólo "\n", resto (telnet) "\r\n"
 		this->_params.push_back(param);
 	}
 }
