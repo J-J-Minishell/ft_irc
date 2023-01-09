@@ -60,6 +60,7 @@ void	Message::welcome_user()
 	std::string	line;
 
 	this->_user.set_registered(true);
+	std::cout << this->_user << INFO_GREEN " is registered" RESET_COLOR << std::endl;
 
 	line = this->numericsMap[RPL_WELCOME];
 	line.replace(line.find("<nick>!<user>@<host>"), 20, _user.get_mask());

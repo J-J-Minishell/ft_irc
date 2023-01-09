@@ -2,7 +2,7 @@
 
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
-User::User(int fd, Server& server) : _fd(fd), _server(server), _nick("unknown"), _username("unknown")
+User::User(int fd, Server& server) : _fd(fd), _server(server), _nick("*"), _username("unknown")
 {
 	this->_registered = false;
 	this->_password = false;

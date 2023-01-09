@@ -23,11 +23,12 @@
 
 # define MAXNICKLENGTH	9
 # define REGTIMEOUT		30
-# define PINGTIMEOUT	10
-# define TIMEOUT		20
+# define PINGTIMEOUT	90
+# define TIMEOUT		45
 
 # define RESET_COLOR	"\033[0m"
 # define MASK_BLUE		"\033[1;34m"
+# define INFO_GREEN		"\033[1;32m"
 
 # define SERVER_VERSION "irc-0.1"
 

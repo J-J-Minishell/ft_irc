@@ -11,5 +11,8 @@ int		cmd_nick(Message &message)
 	user.set_nick(message.get_params().front());
 	
 	user.updateMask();
+
+	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")  // && user.getPassword()
+		send_all(user.get_fd(), "PING :irc-serv\n");
 	return 0;
 }

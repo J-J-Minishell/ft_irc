@@ -14,6 +14,8 @@ int		cmd_user(Message &message)
 			return message.send_numeric(" 461 ", numericStr);
 		}
 		user.set_username(message.get_params()[0]);
+		if (!user.isRegistered() && user.get_nick() != "*")  // && user.getPassword()
+			send_all(user.get_fd(), "PING :irc-serv\n");
 	}
 	else
 		return message.send_numeric(" 462 ", Message::numericsMap[ERR_ALREADYREGISTRED]);
