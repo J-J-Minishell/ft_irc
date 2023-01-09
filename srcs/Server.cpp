@@ -93,7 +93,7 @@ void	Server::_fillCmdMap()
 	_cmdMap["PING"] = &cmd_ping;
 	_cmdMap["PONG"] = &cmd_pong;
 	_cmdMap["QUIT"] = &cmd_quit;
-//	_cmdMap["EXIT"] = &server_cmd;
+	_cmdMap["PRIVMSG"] = &cmd_privmsg;
 }
 
 void	Server::_getAddrinfoStruct()

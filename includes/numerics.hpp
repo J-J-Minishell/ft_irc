@@ -11,6 +11,7 @@ enum
 	RPL_MYINFO				=	4,		// "<servername> <version> <available user modes> <available channel modes>"
 //	RPL_ISUPPORT			=	5,		// "$ :are supported by this server"
 
+	ERR_NOSUCHNICK			=	401,	// "<nickname> :No such nick/channel"
 	ERR_NEEDMOREPARAMS		=	461,	// "<command> :Not enough parameters"
 	ERR_ALREADYREGISTRED	=	462,	// ":Unauthorized command (already registered)"
 

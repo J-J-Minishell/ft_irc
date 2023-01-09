@@ -8,6 +8,7 @@ BASE_SRCS		=	\
 					cmd_user.cpp				\
 					cmd_ping-pong.cpp			\
 					cmd_quit.cpp				\
+					cmd_privmsg.cpp				\
 					utils.cpp
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRCS))														

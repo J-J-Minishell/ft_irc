@@ -88,6 +88,7 @@ void Message::_initStaticVars()
 	numericsMap[RPL_CREATED] = "This server was created " __TIME__ " " __DATE__;
 	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
 
+	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
 }

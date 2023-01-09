@@ -27,6 +27,7 @@ class User
 
 		void				updateMask(void);
 		const std::string&	get_mask(void) const { return this->_mask; };
+		const std::string	get_coloredMask(void);
 
 		void	setHost(const std::string& value);
 

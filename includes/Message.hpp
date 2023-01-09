@@ -18,7 +18,7 @@ class Message
 		User &		get_user() { return this->_user; };
 
 		std::string					get_cmd() { return this->_cmd; };
-		std::vector<std::string>	get_params() { return this->_params; };
+		std::vector<std::string>&	get_params() { return this->_params; };
 
 		void		welcome_user();
 		void		set_lineToSend(std::string line) { this->_lineToSend = line; };

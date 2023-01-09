@@ -22,7 +22,7 @@
 # define MAXBUFFER		255
 
 # define MAXNICKLENGTH	9
-# define REGTIMEOUT		30
+# define REGTIMEOUT		300
 # define PINGTIMEOUT	90
 # define TIMEOUT		45
 
@@ -52,6 +52,6 @@ int				cmd_user(Message &message);
 int				cmd_ping(Message &message);
 int				cmd_pong(Message &message);
 int				cmd_quit(Message &message);
-
+int				cmd_privmsg(Message &message);
 
 #endif

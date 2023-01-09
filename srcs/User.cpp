@@ -48,12 +48,20 @@ void	User::setHost(const std::string& value)
 
 void	User::updateMask(void)
 {
-	this->_mask = MASK_BLUE + this->_nick + "!" + this->_username + "@" + this->_host + RESET_COLOR + ":";
+	this->_mask = this->_nick + "!" + this->_username + "@" + this->_host;
+}
+
+const std::string User::get_coloredMask(void)
+{
+	std::string	coloredMask;
+
+	coloredMask = MASK_BLUE + this->_mask + RESET_COLOR + ":";
+	return coloredMask;
 }
 
 std::ostream &operator<<(std::ostream &out, User &rhs)
 {
-    out << rhs.get_mask();
+    out << rhs.get_coloredMask();
     return (out);
 }
   
