@@ -230,5 +230,8 @@ void	Server::_relocate_poll(int i)
 		this->_relocate_poll(++i);
 	}
 	else
+	{
 		this->_pollfds[i].fd = -1;
+//		this->_pollfds[i].events = 0;
+	}
 }

@@ -10,5 +10,5 @@ int		cmd_quit(Message &message)
 	send_all(user.get_fd(), line.c_str());
 	server.quitUser(user);
 
-	return 0;
+	return -1;
 }

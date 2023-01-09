@@ -24,6 +24,8 @@ Message::Message(Server &server, User &user) : _server(server), _user(user)
 		}
 		else
 			this->_lineToSend = MASK_BLUE + this->_user.get_nick() + RESET_COLOR + ": " + this->_user.get_bufferLine();
+		this->_cmd.clear();
+		this->_params.clear();
 	}
 
 	// tmp
