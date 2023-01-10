@@ -181,8 +181,9 @@ void	Server::_checkInputs(void)
 			if (userTalking->recv_line() > 0)
 			{
 				if (!userTalking->get_bufferLine().empty() && 
-					userTalking->get_bufferLine().find("\r\n") != std::string::npos) // para nc sólo "\n", resto (telnet) "\r\n"
+					userTalking->get_bufferLine().find("\r\n") != std::string::npos)
 				{
+					userTalking->limit_bufferLine();
 					std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
 					message = new Message(*this, *userTalking);
 					delete message;
@@ -230,8 +231,5 @@ void	Server::_relocate_poll(int i)
 		this->_relocate_poll(++i);
 	}
 	else
-	{
 		this->_pollfds[i].fd = -1;
-//		this->_pollfds[i].events = 0;
-	}
 }

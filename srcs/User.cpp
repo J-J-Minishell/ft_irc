@@ -21,13 +21,15 @@ int		User::recv_line()
 	int		bytesRecieved;
 
 	bytesRecieved = recv(this->_fd, buffer, MAXBUFFER, 0);
+	if (this->_bufferLine.size() > 5000)
+		bytesRecieved = -1;
 	if (bytesRecieved > 0)
 	{
 		buffer[bytesRecieved] = '\0';
 		this->_bufferLine += buffer;
 		leftTrim(this->_bufferLine);
 		cleanSignalsFromStr(this->_bufferLine);
-		if (this->_bufferLine == "\r\n") // para nc solo "\n", resto (telnet) "\r\n"
+		if (this->_bufferLine == "\r\n")
 			this->_bufferLine.clear();
 		return bytesRecieved;
 	}
@@ -38,6 +40,16 @@ int		User::recv_line()
 		return -1;
 	}
 	return 0;
+}
+
+void	User::limit_bufferLine()
+{
+	std::string newLine;
+
+	newLine = this->_bufferLine.substr(0, 510);
+	if (newLine.size() == 510)
+		newLine.append("\r\n");
+	this->_bufferLine = newLine;
 }
 
 void	User::setHost(const std::string& value)
@@ -64,4 +76,3 @@ std::ostream &operator<<(std::ostream &out, User &rhs)
     out << rhs.get_coloredMask();
     return (out);
 }
-  

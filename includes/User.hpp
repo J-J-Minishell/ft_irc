@@ -29,6 +29,7 @@ class User
 		const std::string&	get_mask(void) const { return this->_mask; };
 		const std::string	get_coloredMask(void);
 
+		void	limit_bufferLine();
 		void	setHost(const std::string& value);
 
 		int		recv_line();

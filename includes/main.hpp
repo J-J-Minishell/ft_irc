@@ -19,7 +19,7 @@
 
 
 # define MAXUSERS		10
-# define MAXBUFFER		255
+# define MAXBUFFER		512
 
 # define MAXNICKLENGTH	9
 # define REGTIMEOUT		300
