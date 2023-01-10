@@ -6,7 +6,7 @@
 class Server
 {
 	public:
-		static Server*		createInstance(const char *port);
+		static Server*		createInstance(const char *port, std::string passwd);
 		static void			deleteInstance(void);
 		void				run(void);
 
@@ -17,7 +17,7 @@ class Server
 		void				quitUser(User &user);
 
 	private:
-		Server(const char *port);
+		Server(const char *port, std::string password);
 		~Server(void);
 
 		static Server *			_instance;
@@ -28,6 +28,7 @@ class Server
 		struct pollfd			_pollfds[MAXUSERS + 2];
 		int						_numPollfds;
 		std::string				_serverName;
+		std::string				_password;
 
 		UserMap					_usersMap;
 		cmdMap					_cmdMap;

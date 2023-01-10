@@ -42,7 +42,7 @@ Message::~Message()
 
 void Message::set_message(std::string line)
 {
-	std::string	param;
+	std::string param;
 
 	leftTrim(line);
 	this->_cmd = extractWord(line);

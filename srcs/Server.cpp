@@ -4,7 +4,7 @@ Server*	Server::_instance = NULL;
 
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
-Server::Server(const char *port) : _port(port), _numPollfds(1), _serverName("irc-server")
+Server::Server(const char *port, std::string password) : _port(port), _password(password), _numPollfds(1), _serverName("irc-server")
 {
 	memset(this->_pollfds, '\0', sizeof(struct pollfd) * (MAXUSERS + 2));
 	this->_getAddrinfoStruct();
@@ -18,10 +18,10 @@ Server::~Server(void)
 
 // ------------------ CREATE / DELETE INSTANCE ------------------
 
-Server*	Server::createInstance(const char *port)
+Server*	Server::createInstance(const char *port, std::string passwd)
 {
 	if (Server::_instance == NULL)
-		Server::_instance = new Server(port);
+		Server::_instance = new Server(port, passwd);
 	return Server::_instance;
 }
 
