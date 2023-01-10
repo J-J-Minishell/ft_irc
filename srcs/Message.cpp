@@ -42,12 +42,17 @@ Message::~Message()
 
 void Message::set_message(std::string line)
 {
-	std::string param;
+	std::string	param;
 
+	leftTrim(line);
 	this->_cmd = extractWord(line);
-
+	if (this->_cmd[0] == ':')
+		this->_cmd = extractWord(line);
 	while (!line.empty())
 	{
+		leftTrim(line);
+		if (line[0] == ':')
+			return this->_params.push_back(line.erase(0, 1));
 		param = extractWord(line);
 		this->_params.push_back(param);
 	}
