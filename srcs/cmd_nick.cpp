@@ -12,7 +12,7 @@ int		cmd_nick(Message &message)
 	
 	user.updateMask();
 
-	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*"  && user.get_password())
+	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")
 		send_all(user.get_fd(), "PING :irc-serv\n");
 	return 0;
 }

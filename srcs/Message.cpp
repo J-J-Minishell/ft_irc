@@ -19,7 +19,9 @@ Message::Message(Server &server, User &user) : _server(server), _user(user)
 		cmdMap::iterator it = this->_server.getCmdMap().find(strToUpper(this->_cmd));
 		if (it != this->_server.getCmdMap().end())
 		{
-			if (it->second(*this) == -1) // llama a la funcion especifica del comando _cmd
+			if (it->first != "PASS" && !user.get_password())
+				send_numeric(" ", "NO PASSWORD GIVEN");
+			else if (it->second(*this) == -1) // llama a la funcion especifica del comando _cmd
 				return;
 		}
 		else

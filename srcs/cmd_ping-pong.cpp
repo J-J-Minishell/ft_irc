@@ -18,7 +18,7 @@ int		cmd_pong(Message &message)
 	User		&user = message.get_user();
 	std::string	line;
 
-	if (!user.isRegistered() && user.get_password() && user.get_nick() != "*" && user.get_username() != "unknown")
+	if (!user.isRegistered() && user.get_nick() != "*" && user.get_username() != "unknown")
 		message.welcome_user();
 
 	user.reset_time();

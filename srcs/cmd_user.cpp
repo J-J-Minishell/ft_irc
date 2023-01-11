@@ -10,7 +10,7 @@ int		cmd_user(Message &message)
 		if (message.get_params().size() < 4)
 			return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "USER"));
 		user.set_username(message.get_params()[0]);
-		if (!user.isRegistered() && user.get_nick() != "*")  // && user.getPassword()
+		if (!user.isRegistered() && user.get_nick() != "*")
 			send_all(user.get_fd(), "PING :irc-serv\n");
 	}
 	else
