@@ -60,9 +60,8 @@ void	Server::run(void)
 			this->_checkConnection();
 			this->_checkInputs();
 		}
-		for (UserMapIterator it = this->_usersMap.begin(); this->_usersMap.size() && it != this->_usersMap.end(); it++)
-			if (it->second != NULL)
-				this->_checkTime(*it->second);
+		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); )
+			this->_checkTime(*it->second)? it = this->_usersMap.begin() : it++;
 	}
 }
 
@@ -79,7 +78,7 @@ void	Server::quitUser(User &user)
 	std::cout << user << " is leaving." << std::endl;
 	this->_relocate_poll(findPollindex(user));
 	this->_numPollfds--;
-	_usersMap.erase(user.get_fd());
+	this->_usersMap.erase(user.get_fd());
 	delete &user;
 }
 
@@ -197,7 +196,7 @@ void	Server::_checkInputs(void)
 	}
 }
 
-void	Server::_checkTime(User &user)
+int	Server::_checkTime(User &user)
 {
 	std::string line;
 
@@ -213,6 +212,7 @@ void	Server::_checkTime(User &user)
 			line = "ERROR :Closing link: (" + user.get_username() + "@" + user.get_host() + ") [Ping timeout]\n";
 			send_all(user.get_fd(), line.c_str());
 			this->quitUser(user);
+			return 1;
 		}
 	}
 	else
@@ -221,8 +221,10 @@ void	Server::_checkTime(User &user)
 		{
 			send_all(user.get_fd(), "PONG ERROR [Registration timeout]\n");
 			this->quitUser(user);
+			return 1;
 		}
 	}
+	return 0;
 }
 
 void	Server::_relocate_poll(int i)

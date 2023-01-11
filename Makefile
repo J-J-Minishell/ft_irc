@@ -5,7 +5,8 @@ INCL		=	./includes/
 OBJSPATH	=	obj/
 SRCSPATH	=	srcs/
 SERVEROBJS	=	$(patsubst $(SRCSPATH)%, $(OBJSPATH)%, $(SRCS:.cpp=.o))
-DEBUG_FLAGS	=	-g3 -fstandalone-debug
+DEBUG_FLAGS	=	-g3 -fstandalone-debug $(SANITIZE)
+SANITIZE	=	-fsanitize=address
 
 -include	sources.mk
 
@@ -16,10 +17,11 @@ $(OBJSPATH)%.o:	$(SRCSPATH)%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(NAME):	$(SERVEROBJS)
-	$(CXX) -o $@ $^
+	$(CXX) $(LDFLAGS) -o $@ $^
 
 debug: CXXFLAGS += $(DEBUG_FLAGS)
-debug: $(NAME)
+debug: LDFLAGS += $(SANITIZE)
+debug: fclean $(NAME)
 
 clean :
 	rm -f *.o

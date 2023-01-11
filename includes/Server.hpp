@@ -41,7 +41,7 @@ class Server
 		void	_checkInputs(void);
 		void	_checkCommand(std::string line);
 		void	_relocate_poll(int i);
-		void	_checkTime(User &user);
+		int		_checkTime(User &user);
 };
 
 #endif
