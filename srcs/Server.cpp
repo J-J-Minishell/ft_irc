@@ -4,8 +4,9 @@ Server*	Server::_instance = NULL;
 
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
-Server::Server(const char *port, std::string password) : _port(port), _password(password), _numPollfds(1), _serverName("irc-server")
+Server::Server(const char *port, std::string password) : _port(port), _numPollfds(1), _serverName("irc-server")
 {
+	this->_password = password;
 	memset(this->_pollfds, '\0', sizeof(struct pollfd) * (MAXUSERS + 2));
 	this->_getAddrinfoStruct();
 	this->_prepareSocket();
@@ -88,6 +89,7 @@ void	Server::quitUser(User &user)
 
 void	Server::_fillCmdMap()
 {
+	_cmdMap["PASS"] = &cmd_pass;
 	_cmdMap["NICK"] = &cmd_nick;
 	_cmdMap["USER"] = &cmd_user;
 	_cmdMap["PING"] = &cmd_ping;

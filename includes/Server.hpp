@@ -13,6 +13,7 @@ class Server
 		UserMap	&			getUserMap() { return this->_usersMap; };
 		cmdMap	&			getCmdMap() { return this->_cmdMap; };
 		std::string			getServerName() const { return this->_serverName; };
+		std::string			getPassword() const {return this->_password; };
 		int					findPollindex(User &user);
 		void				quitUser(User &user);
 

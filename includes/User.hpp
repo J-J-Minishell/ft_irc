@@ -9,7 +9,7 @@ class User
 		User(int fd, Server& server);
 		~User();
 
-		int				get_fd() const { return this->_fd; };
+		int						get_fd() const { return this->_fd; };
 		std::string &			get_bufferLine() { return this->_bufferLine; };
 		void					clear_bufferLine() { this->_bufferLine.clear(); };
 		const std::string		get_nick() const { return this->_nick; };
@@ -23,11 +23,13 @@ class User
 		time_t					get_timeout() const { return this->_timeout; };
 		void					set_timeout(time_t timeout) { this->_timeout = timeout; };
 		bool					isRegistered() const { return this->_registered; };
-		void					set_registered(bool val) { this->_registered = val;};
+		void					set_registered(bool val) { this->_registered = val; };
+		bool					get_password(void) {return this->_password; };
+		void					set_password(bool val) {this->_password = val; };
 
-		void				updateMask(void);
-		const std::string&	get_mask(void) const { return this->_mask; };
-		const std::string	get_coloredMask(void);
+		void					updateMask(void);
+		const std::string&		get_mask(void) const { return this->_mask; };
+		const std::string		get_coloredMask(void);
 
 		void	limit_bufferLine();
 		void	setHost(const std::string& value);

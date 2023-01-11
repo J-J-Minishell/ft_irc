@@ -47,6 +47,7 @@ class Message;
 #include "Message.hpp"
 #include "utils.hpp"
 
+int				cmd_pass(Message &message);
 int				cmd_nick(Message &message);
 int				cmd_user(Message &message);
 int				cmd_ping(Message &message);
