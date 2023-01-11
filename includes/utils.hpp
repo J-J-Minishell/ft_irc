@@ -13,5 +13,6 @@ int				send_all(int fd, const char* buffer);
 std::string		to_string(long nb);
 std::string		strToUpper(std::string str);
 void			cleanSignalsFromStr(std::string &str);
+std::string		findAndReplace(std::string str, std::string findStr, std::string replaceStr);
 
 #endif

@@ -64,6 +64,11 @@ void	cleanSignalsFromStr(std::string &str)
 		str.erase(pos);
 }
 
+std::string	findAndReplace(std::string str, std::string findStr, std::string replaceStr)
+{
+	return str.replace(str.find(findStr), findStr.size(), replaceStr);
+}
+
 std::string	to_string(long nb)
 {
 	std::ostringstream	oss;

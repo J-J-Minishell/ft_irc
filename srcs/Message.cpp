@@ -70,14 +70,10 @@ int	Message::send_numeric(std::string numeric, std::string numericStr)
 
 void	Message::welcome_user()
 {
-	std::string	line;
-
 	this->_user.set_registered(true);
 	std::cout << this->_user << INFO_GREEN " is registered" RESET_COLOR << std::endl;
 
-	line = this->numericsMap[RPL_WELCOME];
-	line.replace(line.find("<nick>!<user>@<host>"), 20, _user.get_mask());
-	send_numeric(" 001 ", line);
+	send_numeric(" 001 ", findAndReplace(this->numericsMap[RPL_WELCOME], "<nick>!<user>@<host>", _user.get_mask()));
 	send_numeric(" 002 ", this->numericsMap[RPL_YOURHOST]);
 	send_numeric(" 003 ", this->numericsMap[RPL_CREATED]);
 	send_numeric(" 004 ", this->numericsMap[RPL_MYINFO]);

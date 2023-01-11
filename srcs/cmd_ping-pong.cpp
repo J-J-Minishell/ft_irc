@@ -6,11 +6,7 @@ int		cmd_ping(Message &message)
 	std::string	line;
 
 	if (message.get_params().empty())
-	{
-		line = Message::numericsMap[ERR_NEEDMOREPARAMS];
-		line.replace(line.find("<command>"), 9, "PING");
-		return message.send_numeric(" 461 ", line);
-	}
+		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PING"));
 	line = message.prefix + " PONG " + message.get_server().getServerName() + " :" + message.get_params()[0] + "\n";
 	send_all(user.get_fd(), line.c_str());
 

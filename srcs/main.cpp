@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
-	server = Server::createInstance(argv[1], passwd);
+	server = Server::createInstance(argv[1], passwd.c_str());
 	server->run();
 
 	Server::deleteInstance();

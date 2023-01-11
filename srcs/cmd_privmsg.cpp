@@ -3,16 +3,11 @@
 int		cmd_privmsg(Message &message)
 {
 	Server &server = message.get_server();
-
 	std::vector<std::string> &params = message.get_params();
-	std::string numericStr;
+	std::string line;
 
 	if (params.size() < 2)
-	{
-		numericStr = Message::numericsMap[ERR_NEEDMOREPARAMS];
-		numericStr.replace(numericStr.find("<command>"), 9, "PRIVMSG");
-		return message.send_numeric(" 461 ", numericStr);
-	}
+		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PRIVMSG"));
 
 	UserMap			&userMap = server.getUserMap();
 	UserMapIterator	it;
@@ -21,20 +16,16 @@ int		cmd_privmsg(Message &message)
 		if (it->second->get_nick() == params[0])
 		{
 			std::vector<std::string>::iterator param_it = params.begin();
-			numericStr = *++param_it;
+			line = *++param_it;
 			while (++param_it != params.end())
-				numericStr += " " + *param_it;
-			numericStr = ":" + message.get_user().get_mask() + " PRIVMSG " + it->second->get_nick() + " :" + numericStr + "\n";
-			send_all(it->second->get_fd(), numericStr.c_str());
+				line += " " + *param_it;
+			line = ":" + message.get_user().get_mask() + " PRIVMSG " + it->second->get_nick() + " :" + line + "\n";
+			send_all(it->second->get_fd(), line.c_str());
 			return -1;
 		}
 	}
 	if (it == userMap.end())
-	{
-		numericStr = Message::numericsMap[ERR_NOSUCHNICK];
-		numericStr.replace(numericStr.find("<nickname>"), 10, params[0]);
-		return message.send_numeric(" 401 ", numericStr);
-	}
+		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NOSUCHNICK], "<nickname>", params[0]));
 
 	return 0;
 }
