@@ -102,6 +102,9 @@ void Message::_initStaticVars()
 	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
 
 	numericsMap[ERR_NOMOTD] = ":MOTD File is missing";
+	numericsMap[ERR_NONICKNAMEGIVEN] = ":No nickname given";
+	numericsMap[ERR_ERRONEUSNICKNAME] = "<nickname> :Erroneous nickname";
+	numericsMap[ERR_NICKNAMEINUSE] = "<nickname> :Nickname is already in use";
 	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";

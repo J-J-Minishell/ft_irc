@@ -32,6 +32,8 @@
 
 # define SERVER_VERSION "irc-0.1"
 
+# define SPECIALCHAR    "-[]\\`^{}"
+
 class Server;
 class User;
 class Message;
