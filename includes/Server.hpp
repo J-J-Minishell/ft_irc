@@ -15,7 +15,7 @@ class Server
 		std::string			getServerName() const { return this->_serverName; };
 		std::string			getPassword() const {return this->_password; };
 		int					findPollindex(User &user);
-		void				quitUser(User &user);
+		void				quitUser(User *user);
 
 	private:
 		Server(const char *port, std::string password);
@@ -41,7 +41,7 @@ class Server
 		void	_checkInputs(void);
 		void	_checkCommand(std::string line);
 		void	_relocate_poll(int i);
-		int		_checkTime(User &user);
+		int		_checkTime(User *user);
 };
 
 #endif

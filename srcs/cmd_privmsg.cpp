@@ -19,7 +19,7 @@ int		cmd_privmsg(Message &message)
 			line = *++param_it;
 			while (++param_it != params.end())
 				line += " " + *param_it;
-			line = ":" + message.get_user().get_mask() + " PRIVMSG " + it->second->get_nick() + " :" + line + "\n";
+			line = ":" + message.get_user()->get_mask() + " PRIVMSG " + it->second->get_nick() + " :" + line + "\n";
 			send_all(it->second->get_fd(), line.c_str());
 			return -1;
 		}

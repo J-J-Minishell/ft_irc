@@ -2,7 +2,7 @@
 
 int		cmd_pass(Message &message)
 {
-	User		&user = message.get_user();
+	User		&user = *message.get_user();
 
 	if (user.get_password() == 1)
 		return message.send_numeric(" 462 ", Message::numericsMap[ERR_ALREADYREGISTRED]);

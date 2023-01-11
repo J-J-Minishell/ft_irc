@@ -2,7 +2,7 @@
 
 int		cmd_ping(Message &message)
 {
-	User		&user = message.get_user();
+	User		&user = *message.get_user();
 	std::string	line;
 
 	if (message.get_params().empty())
@@ -15,7 +15,7 @@ int		cmd_ping(Message &message)
 
 int		cmd_pong(Message &message)
 {
-	User		&user = message.get_user();
+	User		&user = *message.get_user();
 	std::string	line;
 
 	if (!user.isRegistered() && user.get_nick() != "*" && user.get_username() != "unknown")

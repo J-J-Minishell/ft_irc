@@ -2,13 +2,13 @@
 
 int		cmd_quit(Message &message)
 {
-	User &user = message.get_user();
+	User *user = message.get_user();
 	Server &server = message.get_server();
 	std::string line;
 
-	line = "ERROR :Closing link: (" + user.get_username() + "@" + user.get_host() + ") [Client exited]\n";
-	send_all(user.get_fd(), line.c_str());
+	line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") [Client exited]\n";
+	send_all(user->get_fd(), line.c_str());
 	server.quitUser(user);
-
+	message.delete_user();
 	return -1;
 }

@@ -6,7 +6,7 @@
 class Message
 {
 	public:
-		Message(Server& server, User& user);
+		Message(Server& server, User* user);
 		~Message();
 
 		static	std::map<int, std::string>	numericsMap;
@@ -15,7 +15,7 @@ class Message
 		void	set_message(std::string line);
 
 		Server &	get_server() { return this->_server; };
-		User &		get_user() { return this->_user; };
+		User *		get_user() { return this->_user; };
 
 		std::string					get_cmd() { return this->_cmd; };
 		std::vector<std::string>&	get_params() { return this->_params; };
@@ -23,13 +23,14 @@ class Message
 		void		welcome_user();
 		void		set_lineToSend(std::string line) { this->_lineToSend = line; };
 		int			send_numeric(std::string numeric, std::string numericStr);
+		void		delete_user() { this->_user = NULL; };
 
 	private:
 		void		_send(std::vector<User *> userVector);
 		void		_initStaticVars();
 
 		Server &					_server;
-		User &						_user;
+		User *						_user;
 		std::string					_lineToSend;
 		std::string					_cmd;
 		std::vector<std::string>	_params;

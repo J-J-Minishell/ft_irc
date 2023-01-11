@@ -2,7 +2,7 @@
 
 int		cmd_user(Message &message)
 {
-	User		&user = message.get_user();
+	User		&user = *message.get_user();
 	std::string	numericStr;
 
 	if (user.get_username() == "unknown")

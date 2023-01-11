@@ -61,7 +61,7 @@ void	Server::run(void)
 			this->_checkInputs();
 		}
 		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); )
-			this->_checkTime(*it->second)? it = this->_usersMap.begin() : it++;
+			this->_checkTime(it->second)? it = this->_usersMap.begin() : it++;
 	}
 }
 
@@ -73,13 +73,13 @@ int		Server::findPollindex(User &user)
 	return -1;
 }
 
-void	Server::quitUser(User &user)
+void	Server::quitUser(User *user)
 {
 	std::cout << user << " is leaving." << std::endl;
-	this->_relocate_poll(findPollindex(user));
+	this->_relocate_poll(findPollindex(*user));
 	this->_numPollfds--;
-	this->_usersMap.erase(user.get_fd());
-	delete &user;
+	this->_usersMap.erase(user->get_fd());
+	delete user;
 }
 
 /*  /////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -186,40 +186,40 @@ void	Server::_checkInputs(void)
 				{
 					userTalking->limit_bufferLine();
 					std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
-					message = new Message(*this, *userTalking);
+					message = new Message(*this, userTalking);
 					delete message;
 				}
 			}
 			else
-				this->quitUser(*userTalking);
+				this->quitUser(userTalking);
 		}
 	}
 }
 
-int	Server::_checkTime(User &user)
+int	Server::_checkTime(User *user)
 {
 	std::string line;
 
-	if (user.isRegistered())
+	if (user->isRegistered())
 	{
-		if (!user.get_timeout() && (user.get_time() + PINGTIMEOUT < time(NULL)))
+		if (!user->get_timeout() && (user->get_time() + PINGTIMEOUT < time(NULL)))
 		{
-			user.set_timeout(time(NULL) + TIMEOUT);
-			send_all(user.get_fd(), "PING irc-serv\n");
+			user->set_timeout(time(NULL) + TIMEOUT);
+			send_all(user->get_fd(), "PING irc-serv\n");
 		}
-		else if (user.get_timeout() && user.get_timeout() < time(NULL))
+		else if (user->get_timeout() && user->get_timeout() < time(NULL))
 		{
-			line = "ERROR :Closing link: (" + user.get_username() + "@" + user.get_host() + ") [Ping timeout]\n";
-			send_all(user.get_fd(), line.c_str());
+			line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") [Ping timeout]\n";
+			send_all(user->get_fd(), line.c_str());
 			this->quitUser(user);
 			return 1;
 		}
 	}
 	else
 	{
-		if ((user.get_registTime() + REGTIMEOUT) <= time(NULL))
+		if ((user->get_registTime() + REGTIMEOUT) <= time(NULL))
 		{
-			send_all(user.get_fd(), "PONG ERROR [Registration timeout]\n");
+			send_all(user->get_fd(), "PONG ERROR [Registration timeout]\n");
 			this->quitUser(user);
 			return 1;
 		}
