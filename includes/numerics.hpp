@@ -12,6 +12,8 @@ enum
 //	RPL_ISUPPORT			=	5,		// "$ :are supported by this server"
 	
 	ERR_NOSUCHNICK			=	401,	// "<nickname> :No such nick/channel"
+	ERR_CANNOTSENDTOCHAN	=	404,	// "<channel name> :Cannot send to channel"
+	ERR_TOOMANYCHANNELS		=	405,	// "<channel name> :You have joined too many channels"
 	ERR_UNKNOWNCOMMAND		=	421,	// "<command> :Unknown command"
 	ERR_NOMOTD				=	422,	// ":MOTD File is missing"
 	ERR_NONICKNAMEGIVEN		=	431,	// ":No nickname given"

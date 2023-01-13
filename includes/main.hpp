@@ -20,6 +20,7 @@
 
 # define MAXUSERS		10
 # define MAXBUFFER		512
+# define MAXCHANNELS	5
 
 # define MAXNICKLENGTH	9
 # define REGTIMEOUT		300

@@ -19,7 +19,7 @@ Message::Message(Server &server, User *user) : _server(server), _user(user)
 		cmdMap::iterator it = this->_server.getCmdMap().find(strToUpper(this->_cmd));
 		if (it != this->_server.getCmdMap().end())
 		{
-			if (it->first != "PASS" && !user->get_password())
+			if (it->first != "PASS" && !user->get_password() && it->first != "QUIT")
 				send_numeric(" ", "NO PASSWORD GIVEN");
 			else if (it->second(*this) == -1) // llama a la funcion especifica del comando _cmd
 				return;
@@ -103,6 +103,8 @@ void Message::_initStaticVars()
 	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
 
 	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
+	numericsMap[ERR_CANNOTSENDTOCHAN] = "<channel name> :Cannot send to channel";
+	numericsMap[ERR_TOOMANYCHANNELS] = "<channel name> :You have joined too many channels";
 	numericsMap[ERR_UNKNOWNCOMMAND] = "<command> :Unknown command";
 	numericsMap[ERR_NOMOTD] = ":MOTD File is missing";
 	numericsMap[ERR_NONICKNAMEGIVEN] = ":No nickname given";

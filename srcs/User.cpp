@@ -42,6 +42,23 @@ int		User::recv_line()
 	return 0;
 }
 
+void	User::add_channel(Channel *channel)
+{
+	if (this->_channels.size() < MAXCHANNELS)
+		this->_channels.push_back(channel);
+}
+
+bool	User::is_in_channel(Channel *channel)
+{
+	std::vector<Channel *>::iterator it = this->_channels.begin();
+	for (; it != this->_channels.end(); it++)
+	{
+		if (*it == channel)
+			return true;
+	}
+	return false;
+}
+
 void	User::limit_bufferLine()
 {
 	std::string newLine;

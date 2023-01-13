@@ -26,6 +26,9 @@ class User
 		void					set_registered(bool val) { this->_registered = val; };
 		bool					get_password(void) {return this->_password; };
 		void					set_password(bool val) {this->_password = val; };
+		void					add_channel(Channel *channel);
+		bool					is_in_channel(Channel *channel);
+		std::vector<Channel*>	get_channels() { return this->_channels; };
 
 		void					updateMask(void);
 		const std::string&		get_mask(void) const { return this->_mask; };
@@ -41,13 +44,14 @@ class User
 		User(const User& src);
 		User&	operator=(const User& rhs);
 
-		int				_fd;
-		Server &		_server;
-		std::string		_mask;
-		std::string		_nick;
-		std::string		_username;
-		std::string		_host;
-		std::string		_bufferLine;
+		int						_fd;
+		Server &				_server;
+		std::vector<Channel*>	_channels;
+		std::string				_mask;
+		std::string				_nick;
+		std::string				_username;
+		std::string				_host;
+		std::string				_bufferLine;
 
 		bool			_registered;
 		bool			_password;

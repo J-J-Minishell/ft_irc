@@ -17,7 +17,7 @@ class Server
 		int					findPollindex(User &user);
 		void				quitUser(User *user);
 		pairAddChannel		addChannel(Channel *newChannel);
-		bool				getChannel(Channel *newChannel);
+		channelsMap &		getChannelsMap() { return this->_channelsMap; };
 
 	private:
 		Server(const char *port, std::string password);

@@ -17,10 +17,11 @@ bool	Channel::add_user(User *newUser)
 	return this->_usersMap.insert(std::make_pair(newUser, 0)).second;
 }
 
-void	Channel::send(std::string str)
+void	Channel::send(std::string str, int userFd)
 {
 	for (channelUsersMap::iterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
 	{
-		send_all(it->first->get_fd(), str.c_str());
+		if (!userFd || userFd != it->first->get_fd())
+			send_all(it->first->get_fd(), str.c_str());
 	}
 }

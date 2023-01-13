@@ -13,7 +13,8 @@ class Channel
 
 		std::string		get_name() { return this->_channelName; };
 		bool			add_user(User *newUser);
-		void			send(std::string str);
+		bool			is_user_in_chan(User *user) { return _usersMap.find(user) != _usersMap.end(); };
+		void			send(std::string str, int userFd);
 
 	private:
 		Server &			_server;

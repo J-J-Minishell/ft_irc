@@ -75,7 +75,7 @@ int		Server::findPollindex(User &user)
 
 void	Server::quitUser(User *user)
 {
-	std::cout << user << " is leaving." << std::endl;
+	std::cout << *user << " is leaving." << std::endl;
 	this->_relocate_poll(findPollindex(*user));
 	this->_numPollfds--;
 	this->_usersMap.erase(user->get_fd());
