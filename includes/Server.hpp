@@ -16,6 +16,8 @@ class Server
 		std::string			getPassword() const {return this->_password; };
 		int					findPollindex(User &user);
 		void				quitUser(User *user);
+		pairAddChannel		addChannel(Channel *newChannel);
+		bool				getChannel(Channel *newChannel);
 
 	private:
 		Server(const char *port, std::string password);
@@ -33,6 +35,7 @@ class Server
 
 		UserMap					_usersMap;
 		cmdMap					_cmdMap;
+		channelsMap				_channelsMap;
 
 		void	_prepareSocket(void);
 		void	_getAddrinfoStruct(void);

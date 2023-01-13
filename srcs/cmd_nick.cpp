@@ -17,7 +17,7 @@ int		cmd_nick(Message &message)
 		if ((i == 0) && !isalpha(message.get_params()[0][i]) && specialChar.find(message.get_params()[0][i]) == std::string::npos)
 			return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
 		else if (std::isalpha(message.get_params()[0][i]) || std::isdigit(message.get_params()[0][i]) || specialChar.find(message.get_params()[0][i]) != std::string::npos)
-			std::cout << message.get_user().get_mask() + " NICK :" + message.get_params()[0] << std::endl;
+			std::cout << user.get_mask() + " NICK :" + message.get_params()[0] << std::endl;
 		else
 			return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
     }
@@ -28,7 +28,7 @@ int		cmd_nick(Message &message)
 			return message.send_numeric(" 433 ", Message::numericsMap[ERR_NICKNAMEINUSE]);
 	}
 
-	line = message.get_user().get_mask() + " NICK :" + message.get_params()[0] + "\n";
+	line = user.get_mask() + " NICK :" + message.get_params()[0] + "\n";
 
 	message.set_lineToSend(line);
 	user.set_nick(message.get_params().front());

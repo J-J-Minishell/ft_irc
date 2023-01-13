@@ -37,16 +37,21 @@
 class Server;
 class User;
 class Message;
+class Channel;
 
-	typedef std::map<int, User*>		UserMap;
-	typedef UserMap::iterator			UserMapIterator;
+	typedef std::map<int, User*>							UserMap;
+	typedef UserMap::iterator								UserMapIterator;
 	typedef std::map<std::string, int (*)(Message &)>		cmdMap;
+	typedef std::map<std::string, Channel*>					channelsMap;
+	typedef std::pair<channelsMap::iterator, bool>			pairAddChannel;
+
 
 
 #include "Server.hpp"
 #include "User.hpp"
 #include "numerics.hpp"
 #include "Message.hpp"
+#include "Channel.hpp"
 #include "utils.hpp"
 
 int				cmd_pass(Message &message);
@@ -56,5 +61,6 @@ int				cmd_ping(Message &message);
 int				cmd_pong(Message &message);
 int				cmd_quit(Message &message);
 int				cmd_privmsg(Message &message);
+int				cmd_join(Message &message);
 
 #endif

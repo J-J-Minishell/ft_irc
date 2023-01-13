@@ -82,6 +82,11 @@ void	Server::quitUser(User *user)
 	delete user;
 }
 
+pairAddChannel	Server::addChannel(Channel *newChannel)
+{
+	return this->_channelsMap.insert(std::make_pair(newChannel->get_name(), newChannel));
+}
+
 /*  /////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	////////////////////////////////////  PRIVATE METHODS  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
 	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////////////////////////// */
@@ -95,6 +100,7 @@ void	Server::_fillCmdMap()
 	_cmdMap["PONG"] = &cmd_pong;
 	_cmdMap["QUIT"] = &cmd_quit;
 	_cmdMap["PRIVMSG"] = &cmd_privmsg;
+	_cmdMap["JOIN"] = &cmd_join;
 }
 
 void	Server::_getAddrinfoStruct()
