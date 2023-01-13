@@ -6,8 +6,6 @@
 class Channel
 {
 	public:
-		typedef	std::map<User*, int>			channelUsersMap;
-
 		Channel(Server& server, User* creator, std::string name);
 		~Channel();
 
@@ -15,6 +13,7 @@ class Channel
 		bool			add_user(User *newUser);
 		bool			is_user_in_chan(User *user) { return _usersMap.find(user) != _usersMap.end(); };
 		void			send(std::string str, int userFd);
+		channelUsersMap	get_usersMap() { return this->_usersMap; };
 
 	private:
 		Server &			_server;

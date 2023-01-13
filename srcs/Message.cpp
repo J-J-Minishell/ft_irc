@@ -84,12 +84,12 @@ void	Message::welcome_user()
 	send_numeric(" 422 ", this->numericsMap[ERR_NOMOTD]);
 }
 
-void Message::_send(std::vector<User *> userVector)
+void Message::send_message(std::vector<User *> userVector, std::string line)
 {
 	for (std::vector<User *>::iterator it = userVector.begin(); it != userVector.end(); it++)
 	{
 		if (this->_user->get_fd() != (*it)->get_fd())
-			send_all((*it)->get_fd(), this->_lineToSend.c_str());
+			send_all((*it)->get_fd(), line.c_str());
 	}
 }
 

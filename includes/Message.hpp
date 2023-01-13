@@ -21,17 +21,15 @@ class Message
 		std::vector<std::string>&	get_params() { return this->_params; };
 
 		void		welcome_user();
-		void		set_lineToSend(std::string line) { this->_lineToSend = line; };
 		int			send_numeric(std::string numeric, std::string numericStr);
 		void		delete_user() { this->_user = NULL; };
+		void		send_message(std::vector<User *> userVector, std::string line);
 
 	private:
-		void		_send(std::vector<User *> userVector);
 		void		_initStaticVars();
 
 		Server &					_server;
 		User *						_user;
-		std::string					_lineToSend;
 		std::string					_cmd;
 		std::vector<std::string>	_params;
 

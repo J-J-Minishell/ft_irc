@@ -42,6 +42,24 @@ int		User::recv_line()
 	return 0;
 }
 
+std::vector<User*>	User::get_users_from_channels()
+{
+	std::map<User*, int>	totalUsers;
+	std::vector<Channel *>::iterator it;
+	std::vector<User*>		retUsers;
+
+	for (it = this->_channels.begin(); it != this->_channels.end(); it++)
+	{
+		channelUsersMap	usersInChan = (*it)->get_usersMap();
+		for (channelUsersMap::iterator it = usersInChan.begin(); it != usersInChan.end(); it++)
+		{
+			if (totalUsers.insert(std::make_pair(it->first, 0)).second)
+				retUsers.push_back(it->first);
+		}
+	}
+	return retUsers;
+}
+
 void	User::add_channel(Channel *channel)
 {
 	if (this->_channels.size() < MAXCHANNELS)
@@ -50,8 +68,8 @@ void	User::add_channel(Channel *channel)
 
 bool	User::is_in_channel(Channel *channel)
 {
-	std::vector<Channel *>::iterator it = this->_channels.begin();
-	for (; it != this->_channels.end(); it++)
+	std::vector<Channel *>::iterator it;
+	for (it = this->_channels.begin(); it != this->_channels.end(); it++)
 	{
 		if (*it == channel)
 			return true;

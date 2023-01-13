@@ -29,11 +29,12 @@ int		cmd_nick(Message &message)
 	}
 
 	line = user.get_mask() + " NICK :" + message.get_params()[0] + "\n";
-
-	message.set_lineToSend(line);
 	user.set_nick(message.get_params().front());
-	
 	user.updateMask();
+
+	send_all(user.get_fd(), line.c_str());
+	if (user.isRegistered())
+		message.send_message(user.get_users_from_channels(), line);
 
 	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")
 		send_all(user.get_fd(), "PING :irc-serv\n");

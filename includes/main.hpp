@@ -44,6 +44,7 @@ class Channel;
 	typedef UserMap::iterator								UserMapIterator;
 	typedef std::map<std::string, int (*)(Message &)>		cmdMap;
 	typedef std::map<std::string, Channel*>					channelsMap;
+	typedef	std::map<User*, int>							channelUsersMap;
 	typedef std::pair<channelsMap::iterator, bool>			pairAddChannel;
 
 
