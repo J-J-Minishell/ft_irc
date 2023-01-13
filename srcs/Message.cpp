@@ -25,16 +25,17 @@ Message::Message(Server &server, User *user) : _server(server), _user(user)
 				return;
 		}
 		else
-			this->_lineToSend = MASK_BLUE + this->_user->get_nick() + RESET_COLOR + ": " + this->_user->get_bufferLine();
+			send_numeric(" 421 ", findAndReplace(Message::numericsMap[ERR_UNKNOWNCOMMAND], "<command>", strToUpper(this->_cmd)));
 		this->_cmd.clear();
 		this->_params.clear();
 	}
-
+/*
 	// tmp
 	std::vector<User *> userVector;
 	for (UserMapIterator it = this->_server.getUserMap().begin(); it != this->_server.getUserMap().end(); it++)
 		userVector.push_back(it->second);
 	this->_send(userVector);
+*/
 }
 
 Message::~Message()
@@ -101,11 +102,12 @@ void Message::_initStaticVars()
 	numericsMap[RPL_CREATED] = "This server was created " __TIME__ " " __DATE__;
 	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
 
+	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
+	numericsMap[ERR_UNKNOWNCOMMAND] = "<command> :Unknown command";
 	numericsMap[ERR_NOMOTD] = ":MOTD File is missing";
 	numericsMap[ERR_NONICKNAMEGIVEN] = ":No nickname given";
 	numericsMap[ERR_ERRONEUSNICKNAME] = "<nickname> :Erroneous nickname";
 	numericsMap[ERR_NICKNAMEINUSE] = "<nickname> :Nickname is already in use";
-	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
 }

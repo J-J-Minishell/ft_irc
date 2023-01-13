@@ -12,6 +12,7 @@ enum
 //	RPL_ISUPPORT			=	5,		// "$ :are supported by this server"
 	
 	ERR_NOSUCHNICK			=	401,	// "<nickname> :No such nick/channel"
+	ERR_UNKNOWNCOMMAND		=	421,	// "<command> :Unknown command"
 	ERR_NOMOTD				=	422,	// ":MOTD File is missing"
 	ERR_NONICKNAMEGIVEN		=	431,	// ":No nickname given"
 	ERR_ERRONEUSNICKNAME	=	432,	// "<nick> :Erroneous nickname"
