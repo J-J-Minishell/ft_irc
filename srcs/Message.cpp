@@ -21,28 +21,21 @@ Message::Message(Server &server, User *user) : _server(server), _user(user)
 		{
 			if (it->first != "PASS" && !user->get_password() && it->first != "QUIT")
 				send_numeric(" ", "NO PASSWORD GIVEN");
-			else if (it->second(*this) == -1) // llama a la funcion especifica del comando _cmd
-				return;
+			else
+				it->second(*this); // llama a la funcion especifica del comando _cmd
 		}
 		else
 			send_numeric(" 421 ", findAndReplace(Message::numericsMap[ERR_UNKNOWNCOMMAND], "<command>", strToUpper(this->_cmd)));
 		this->_cmd.clear();
 		this->_params.clear();
+
+		if (!this->_user)
+			return ;
 	}
-/*
-	// tmp
-	std::vector<User *> userVector;
-	for (UserMapIterator it = this->_server.getUserMap().begin(); it != this->_server.getUserMap().end(); it++)
-		userVector.push_back(it->second);
-	this->_send(userVector);
-*/
 }
 
 Message::~Message()
-{
-	if (this->_user)
-		this->_user->clear_bufferLine();
-}
+{}
 
 void Message::set_message(std::string line)
 {
@@ -75,7 +68,7 @@ int	Message::send_numeric(std::string numeric, std::string numericStr)
 void	Message::welcome_user()
 {
 	this->_user->set_registered(true);
-	std::cout << this->_user << INFO_GREEN " is registered" RESET_COLOR << std::endl;
+	std::cout << *this->_user << INFO_GREEN " is registered" RESET_COLOR << std::endl;
 
 	send_numeric(" 001 ", findAndReplace(this->numericsMap[RPL_WELCOME], "<nick>!<user>@<host>", _user->get_mask()));
 	send_numeric(" 002 ", this->numericsMap[RPL_YOURHOST]);

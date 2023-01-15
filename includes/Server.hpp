@@ -32,6 +32,7 @@ class Server
 		int						_numPollfds;
 		std::string				_serverName;
 		std::string				_password;
+		bool					_run;
 
 		UserMap					_usersMap;
 		cmdMap					_cmdMap;
@@ -39,9 +40,11 @@ class Server
 
 		void	_prepareSocket(void);
 		void	_getAddrinfoStruct(void);
+		void	_listen(void);
 		void	_fillCmdMap(void);
 		void	_checkConnection(void);
 		void	_checkInputs(void);
+		void	_serverInput(void);
 		void	_checkCommand(std::string line);
 		void	_relocate_poll(int i);
 		int		_checkTime(User *user);

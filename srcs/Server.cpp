@@ -4,7 +4,7 @@ Server*	Server::_instance = NULL;
 
 // ------------------ CONSTRUCTOR / DESTRUCTOR------------------
 
-Server::Server(const char *port, std::string password) : _port(port), _numPollfds(1), _serverName("irc-server")
+Server::Server(const char *port, std::string password) : _port(port), _numPollfds(2), _serverName("irc-server"), _run(false)
 {
 	this->_password = password;
 	memset(this->_pollfds, '\0', sizeof(struct pollfd) * (MAXUSERS + 2));
@@ -39,15 +39,9 @@ void	Server::run(void)
 {
 	int	numEvents;
 
-	if (listen(this->_fd, MAXUSERS) < 0)
-	{
-		std::cerr << "Error, listen() failed" << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	this->_pollfds[0].fd = this->_fd;
-	this->_pollfds[0].events = POLLIN;
-	std::cout << "Waiting for connections in " << inet_ntoa(this->_sockaddr_in->sin_addr) << std::endl;
-	while (1)
+	this->_listen();
+	this->_run = true;
+	while (this->_run)
 	{
 		numEvents = poll(this->_pollfds, MAXUSERS + 2, 1000);
 		if (numEvents == -1)
@@ -62,6 +56,8 @@ void	Server::run(void)
 		}
 		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); )
 			this->_checkTime(it->second)? it = this->_usersMap.begin() : it++;
+		if (this->_pollfds[1].revents & POLLIN)
+			this->_serverInput();
 	}
 }
 
@@ -147,6 +143,20 @@ void	Server::_prepareSocket()
 	}
 }
 
+void	Server::_listen()
+{
+	if (listen(this->_fd, MAXUSERS) < 0)
+	{
+		std::cerr << "Error, listen() failed" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	this->_pollfds[0].fd = this->_fd;
+	this->_pollfds[0].events = POLLIN;
+	this->_pollfds[1].fd = 0;
+	this->_pollfds[1].events = POLLIN;
+	std::cout << "Waiting for connections in " << inet_ntoa(this->_sockaddr_in->sin_addr) << ":" << htons(this->_sockaddr_in->sin_port) << std::endl;
+}
+
 void	Server::_checkConnection(void)
 {
 	int					new_fd;
@@ -159,9 +169,9 @@ void	Server::_checkConnection(void)
 			std::cerr << "Error, accept() failed" << std::endl;
 			exit(EXIT_FAILURE);
 		}
-		else if(this->_numPollfds > MAXUSERS)
+		else if(this->_numPollfds >= MAXUSERS + 2)
 		{
-			send(new_fd, "The server is full. Please, try again later.", 45, 0);
+			send_all(new_fd, "The server is full. Please, try again later\n");
 			std::cerr << "User tried to connect but server is full" << std::endl;
 			close(new_fd);
 			return ;
@@ -175,12 +185,29 @@ void	Server::_checkConnection(void)
 	}
 }
 
+void	Server::_serverInput(void)
+{
+	std::string		buffer;
+
+	std::getline(std::cin, buffer);
+	if (std::cin && buffer == "shutdown")
+	{
+		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
+		{
+			send_all(it->second->get_fd(), "**** SERVER SHUTDOWN ****");
+			delete it->second;
+		}
+		free(this->_server_info);
+		this->_run = false;
+	}
+}
+
 void	Server::_checkInputs(void)
 {
 	User *		userTalking;
 	Message*	message;
 
-	for (int i = 1; i < this->_numPollfds; i++)
+	for (int i = 2; i < this->_numPollfds; i++)
 	{
 		if (this->_pollfds[i].revents & POLLIN)
 		{
