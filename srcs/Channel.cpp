@@ -5,8 +5,6 @@
 Channel::Channel(Server& server, User* creator, std::string name) : _server(server), _creator(creator), _channelName(name)
 {
 	this->_usersMap[_creator] = 2;
-
-	(void)this->_server.getPassword(); // tmp para el flag -Wall unused variable
 }
 
 Channel::~Channel()

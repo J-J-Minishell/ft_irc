@@ -64,5 +64,7 @@ int				cmd_pong(Message &message);
 int				cmd_quit(Message &message);
 int				cmd_privmsg(Message &message);
 int				cmd_join(Message &message);
+int				cmd_list(Message &message);
+int				cmd_names(Message &message);
 
 #endif

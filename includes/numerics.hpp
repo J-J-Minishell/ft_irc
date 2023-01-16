@@ -11,6 +11,8 @@ enum
 	RPL_MYINFO				=	4,		// "<servername> <version> <available user modes> <available channel modes>"
 //	RPL_ISUPPORT			=	5,		// "$ :are supported by this server"
 	
+	RPL_LISTEND				=	323,	// ":End of LIST"
+	RPL_ENDOFNAMES			=	366,	// "<channel> :End of NAMES list"
 	ERR_NOSUCHNICK			=	401,	// "<nickname> :No such nick/channel"
 	ERR_CANNOTSENDTOCHAN	=	404,	// "<channel name> :Cannot send to channel"
 	ERR_TOOMANYCHANNELS		=	405,	// "<channel name> :You have joined too many channels"

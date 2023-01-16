@@ -97,6 +97,8 @@ void	Server::_fillCmdMap()
 	_cmdMap["QUIT"] = &cmd_quit;
 	_cmdMap["PRIVMSG"] = &cmd_privmsg;
 	_cmdMap["JOIN"] = &cmd_join;
+	_cmdMap["LIST"] = &cmd_list;
+	_cmdMap["NAMES"] = &cmd_names;
 }
 
 void	Server::_getAddrinfoStruct()

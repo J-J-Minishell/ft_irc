@@ -95,6 +95,8 @@ void Message::_initStaticVars()
 	numericsMap[RPL_CREATED] = "This server was created " __TIME__ " " __DATE__;
 	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
 
+	numericsMap[RPL_LISTEND] = ":End of LIST";
+	numericsMap[RPL_ENDOFNAMES] = "<channel> :End of NAMES list";
 	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
 	numericsMap[ERR_CANNOTSENDTOCHAN] = "<channel name> :Cannot send to channel";
 	numericsMap[ERR_TOOMANYCHANNELS] = "<channel name> :You have joined too many channels";
