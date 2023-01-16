@@ -12,6 +12,11 @@ User::User(int fd, Server& server) : _fd(fd), _server(server), _nick("*"), _user
 
 User::~User()
 {
+	std::vector<Channel *>::iterator it;
+
+	for (it = this->_channels.begin(); it != this->_channels.end(); )
+		(*it)->delete_user(this);
+
 	close(this->_fd);
 }
 

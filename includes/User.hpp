@@ -28,7 +28,7 @@ class User
 		void					set_password(bool val) {this->_password = val; };
 		void					add_channel(Channel *channel);
 		bool					is_in_channel(Channel *channel);
-		std::vector<Channel*>	get_channels() { return this->_channels; };
+		std::vector<Channel*> &	get_channels() { return this->_channels; };
 		std::vector<User*>		get_users_from_channels();
 
 		void					updateMask(void);

@@ -21,7 +21,7 @@ int		cmd_join(Message &message)
 	else
 		return message.send_numeric(" 405 ", findAndReplace(Message::numericsMap[ERR_TOOMANYCHANNELS], "<channel name>", message.get_params()[0]));
 
-	line = user->get_mask() + " JOIN :" + newChannel->get_name() + "\n";
+	line = user->get_mask() + " JOIN :" + pair.first->second->get_name() + "\n";
 	pair.first->second->send(line, -1);
 
 	return -1;
