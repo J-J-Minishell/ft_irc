@@ -5,6 +5,10 @@ BASE_SRCS		=	\
 					User.cpp					\
 					Message.cpp					\
 					Channel.cpp					\
+					utils.cpp					
+
+COMMAND_PATH	=	srcs/commands/
+COMMAND_SRCS	=	\
 					cmd_nick.cpp				\
 					cmd_user.cpp				\
 					cmd_ping-pong.cpp			\
@@ -12,7 +16,7 @@ BASE_SRCS		=	\
 					cmd_privmsg.cpp				\
 					cmd_pass.cpp				\
 					cmd_join.cpp				\
-					utils.cpp					
 
-SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRCS))														
+SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRCS))			\
+					$(addprefix $(COMMAND_PATH), $(COMMAND_SRCS))										
 
