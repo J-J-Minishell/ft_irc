@@ -109,6 +109,7 @@ void	Server::_fillCmdMap()
 	_cmdMap["JOIN"] = &cmd_join;
 	_cmdMap["LIST"] = &cmd_list;
 	_cmdMap["NAMES"] = &cmd_names;
+	_cmdMap["PART"] = &cmd_part;
 }
 
 void	Server::_getAddrinfoStruct()

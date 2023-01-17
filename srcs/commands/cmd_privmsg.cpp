@@ -37,15 +37,14 @@ int		find_channel(Message &message, std::string line)
 
 int		cmd_privmsg(Message &message)
 {
-	std::vector<std::string> &params = message.get_params();
+	std::vector<std::string>	&params = message.get_params();
+	std::string					line;
 
 	if (params.size() < 2)
 		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PRIVMSG"));
 
-	std::vector<std::string>::iterator	param_it = params.begin();
-	std::string							line = *++param_it;
-	while (++param_it != params.end())
-		line += " " + *param_it;
+	line = vectorToString(params);
+	extractWord(line);
 	line = ":" + message.get_user()->get_mask() + " PRIVMSG " + params[0] + " :" + line + "\n";
 
 	if (!find_nick(message, line) && !find_channel(message, line))

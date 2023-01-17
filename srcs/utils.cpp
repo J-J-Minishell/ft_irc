@@ -64,6 +64,21 @@ void	cleanSignalsFromStr(std::string &str)
 		str.erase(pos);
 }
 
+std::string	vectorToString(std::vector<std::string> vector)
+{
+	std::vector<std::string>::iterator	it;
+	std::string							line;
+
+	for (it = vector.begin(); it != vector.end(); it++)
+	{
+		if (it == vector.begin())
+			line = *it;
+		else
+			line += " " + *it;
+	}
+	return line;
+}
+
 std::string	findAndReplace(std::string str, std::string findStr, std::string replaceStr)
 {
 	return str.replace(str.find(findStr), findStr.size(), replaceStr);
