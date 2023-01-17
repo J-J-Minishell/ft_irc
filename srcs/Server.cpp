@@ -83,6 +83,16 @@ pairAddChannel	Server::addChannel(Channel *newChannel)
 	return this->_channelsMap.insert(std::make_pair(newChannel->get_name(), newChannel));
 }
 
+channelUsersMap	*	Server::getChannelUsersMap(std::string channelName)
+{
+	for (channelsMap::iterator it = this->_channelsMap.begin(); it != this->_channelsMap.end(); it++)
+	{
+		if (it->first == channelName)
+			return &it->second->get_usersMap();
+	}
+	return NULL;
+}
+
 /*  /////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	////////////////////////////////////  PRIVATE METHODS  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
 	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////////////////////////// */

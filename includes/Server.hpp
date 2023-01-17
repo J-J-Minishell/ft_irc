@@ -18,6 +18,7 @@ class Server
 		void				quitUser(User *user);
 		pairAddChannel		addChannel(Channel *newChannel);
 		channelsMap &		getChannelsMap() { return this->_channelsMap; };
+		channelUsersMap *	getChannelUsersMap(std::string channelName);
 
 	private:
 		Server(const char *port, std::string password);

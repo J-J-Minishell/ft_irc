@@ -6,7 +6,7 @@
 class Message
 {
 	public:
-		Message(Server& server, User* user);
+		 Message(Server& server, User* user);
 		~Message();
 
 		static	std::map<int, std::string>	numericsMap;
