@@ -42,6 +42,6 @@ void	Channel::send(std::string str, int userFd)
 	for (channelUsersMap::iterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
 	{
 		if (!userFd || userFd != it->first->get_fd())
-			send_all(it->first->get_fd(), str.c_str());
+			send_all(it->first, str.c_str());
 	}
 }

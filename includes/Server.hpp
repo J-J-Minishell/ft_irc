@@ -19,6 +19,8 @@ class Server
 		pairAddChannel		addChannel(Channel *newChannel);
 		channelsMap &		getChannelsMap() { return this->_channelsMap; };
 		channelUsersMap *	getChannelUsersMap(std::string channelName);
+		void				setPOLLOUT(User *user);
+		short				getPollEvents(User *user) { return this->_pollfds[findPollindex(*user)].events; };
 
 	private:
 		Server(const char *port, std::string password);

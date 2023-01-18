@@ -11,7 +11,7 @@ int		cmd_user(Message &message)
 			return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "USER"));
 		user.set_username(message.get_params()[0]);
 		if (!user.isRegistered() && user.get_nick() != "*")
-			send_all(user.get_fd(), "PING :irc-serv\n");
+			send_all(&user, "PING :irc-serv\n");
 	}
 	else
 		return message.send_numeric(" 462 ", Message::numericsMap[ERR_ALREADYREGISTRED]);

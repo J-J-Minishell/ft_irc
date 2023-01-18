@@ -10,6 +10,7 @@ class User
 		~User();
 
 		int						get_fd() const { return this->_fd; };
+		Server	&				get_server() const { return this->_server; };
 		std::string &			get_bufferLine() { return this->_bufferLine; };
 		void					clear_bufferLine() { this->_bufferLine.clear(); };
 		const std::string		get_nick() const { return this->_nick; };

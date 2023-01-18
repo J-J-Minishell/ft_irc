@@ -27,12 +27,12 @@ int		cmd_nick(Message &message)
 
 	if (user.isRegistered())
 	{
-		send_all(user.get_fd(), line.c_str());
+		send_all(&user, line.c_str());
 		message.send_message(user.get_users_from_channels(), line);
 	}
 
 	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")
-		send_all(user.get_fd(), "PING :irc-serv\n");
+		send_all(&user, "PING :irc-serv\n");
 	return 0;
 }
    

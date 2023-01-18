@@ -41,7 +41,7 @@ int		User::recv_line()
 	else if (bytesRecieved < 0)
 	{
 		std::cerr << "Error, function recv() failed" << std::endl;
-		send_all(this->_fd, "Error, function recv() failed, leaving the server.");
+		send_all(this, "Error, function recv() failed, leaving the server.");
 		return -1;
 	}
 	return 0;

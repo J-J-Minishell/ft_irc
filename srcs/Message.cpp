@@ -60,7 +60,7 @@ int	Message::send_numeric(std::string numeric, std::string numericStr)
 	std::string	line;
 
 	line = prefix + numeric + this->_user->get_nick() + " " + numericStr + "\n";
-	send_all(this->_user->get_fd(), line.c_str());
+	send_all(this->_user, line.c_str());
 
 	return -1;
 }
@@ -82,7 +82,7 @@ void Message::send_message(std::vector<User *> userVector, std::string line)
 	for (std::vector<User *>::iterator it = userVector.begin(); it != userVector.end(); it++)
 	{
 		if (this->_user->get_fd() != (*it)->get_fd())
-			send_all((*it)->get_fd(), line.c_str());
+			send_all(*it, line.c_str());
 	}
 }
 

@@ -12,7 +12,7 @@ int		cmd_quit(Message &message)
 	else
 		line += "[Client exited]\n";
 	
-	send_all(user->get_fd(), line.c_str());
+	send_all(user, line.c_str());
 
 	if (!message.get_params().empty())
 		line = ":" + user->get_mask() + "QUIT :" + message.get_params()[0] + "\n";

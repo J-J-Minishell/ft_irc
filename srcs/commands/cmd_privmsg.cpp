@@ -9,7 +9,7 @@ int		find_nick(Message &message, std::string line)
 	{
 		if (it->second->get_nick() == params[0])
 		{
-			send_all(it->second->get_fd(), line.c_str());
+			send_all(it->second, line.c_str());
 			return 1;
 		}
 	}

@@ -93,6 +93,11 @@ channelUsersMap	*	Server::getChannelUsersMap(std::string channelName)
 	return NULL;
 }
 
+void	Server::setPOLLOUT(User *user)
+{
+	this->_pollfds[this->findPollindex(*user)].events = POLLOUT;
+}
+
 /*  /////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	////////////////////////////////////  PRIVATE METHODS  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
 	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////////////////////////// */
@@ -186,7 +191,8 @@ void	Server::_checkConnection(void)
 		}
 		else if(this->_numPollfds >= MAXUSERS + 2)
 		{
-			send_all(new_fd, "The server is full. Please, try again later\n");
+			User tmpUser(new_fd, *this);
+			send_all(&tmpUser, "The server is full. Please, try again later\n");
 			std::cerr << "User tried to connect but server is full" << std::endl;
 			close(new_fd);
 			return ;
@@ -209,7 +215,7 @@ void	Server::_serverInput(void)
 	{
 		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
 		{
-			send_all(it->second->get_fd(), "**** SERVER SHUTDOWN ****");
+			send_all(it->second, "**** SERVER SHUTDOWN ****");
 			delete it->second;
 		}
 		freeaddrinfo(this->_server_info);
@@ -253,12 +259,12 @@ int	Server::_checkTime(User *user)
 		if (!user->get_timeout() && (user->get_time() + PINGTIMEOUT < time(NULL)))
 		{
 			user->set_timeout(time(NULL) + TIMEOUT);
-			send_all(user->get_fd(), "PING irc-serv\n");
+			send_all(user, "PING irc-serv\n");
 		}
 		else if (user->get_timeout() && user->get_timeout() < time(NULL))
 		{
 			line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") [Ping timeout]\n";
-			send_all(user->get_fd(), line.c_str());
+			send_all(user, line.c_str());
 			this->quitUser(user);
 			return 1;
 		}
@@ -267,7 +273,7 @@ int	Server::_checkTime(User *user)
 	{
 		if ((user->get_registTime() + REGTIMEOUT) <= time(NULL))
 		{
-			send_all(user->get_fd(), "PONG ERROR [Registration timeout]\n");
+			send_all(user, "PONG ERROR [Registration timeout]\n");
 			this->quitUser(user);
 			return 1;
 		}

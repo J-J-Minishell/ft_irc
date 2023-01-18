@@ -17,7 +17,7 @@ std::string	extractWord(std::string& data)
 	return newStr;
 }
 
-int		send_all(int fd, const char* buffer)
+int		send_all(User *user, const char* buffer)
 {
 	const char*	ptr;
 	int			num_bytes;
@@ -28,11 +28,18 @@ int		send_all(int fd, const char* buffer)
 		length++;
 	while (length > 0)
 	{
-		num_bytes = send(fd, ptr, length, 0);
+	//	if (user->get_server().getPollEvents(user) == POLLIN)
+			num_bytes = send(user->get_fd(), ptr, length, 0);
 		if (num_bytes < 0)
 		{
 			std::cerr << "Error, function send() failed" << std::endl;
 			return -1;
+		}
+		if (num_bytes < (int)length)
+		{
+			//TODO: activar POLLOUT, almacenar sobrante
+			user->get_server().setPOLLOUT(user);
+			break;
 		}
 		ptr += num_bytes;
 		length -= num_bytes;
