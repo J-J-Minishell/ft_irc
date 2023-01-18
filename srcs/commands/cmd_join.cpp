@@ -15,12 +15,12 @@ int		cmd_join(Message &message)
 	std::string channelName = message.get_params()[0]; //hola adios
 
 	if (channelName.empty())
-		std::cout << "\nerror\n";//return message.send_numeric(" 431 ", Message::numericsMap[ERR_NONICKNAMEGIVEN]);
+		return message.send_numeric(" 461 ", Message::numericsMap[ERR_NEEDMOREPARAMS]);
 	if (channelName.size() > 200 || (channelName[0] != '&' && channelName[0] != '#'))
-		std::cout << "\nerror\n";//return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
+		return message.send_numeric(" 476 ", Message::numericsMap[ERR_BADCHANMASK]);
 	for (size_t i = 1; i < channelName.size(); i++)
 		if (channelName[i] == ' ' || (int)channelName[i] == 7 || channelName[i] == ',')
-			std::cout << "\nerror\n";//return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
+			return message.send_numeric(" 476 ", Message::numericsMap[ERR_BADCHANMASK]);
 	if (user->get_channels().size() < MAXCHANNELS)
 	{
 		newChannel = new Channel(server, user, message.get_params()[0]);

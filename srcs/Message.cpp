@@ -97,8 +97,8 @@ void Message::_initStaticVars()
 
 	numericsMap[RPL_LISTEND] = ":End of LIST";
 	numericsMap[RPL_ENDOFNAMES] = "<channel> :End of NAMES list";
-	numericsMap[ERR_NOSUCHNICK] = "<channel name> :No such channel";
-	numericsMap[ERR_NOSUCHCHANNEL] = "<nickname> :No such nick/channel";
+	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
+	numericsMap[ERR_NOSUCHCHANNEL] = "<channel name> :No such channel";
 	numericsMap[ERR_CANNOTSENDTOCHAN] = "<channel name> :Cannot send to channel";
 	numericsMap[ERR_TOOMANYCHANNELS] = "<channel name> :You have joined too many channels";
 	numericsMap[ERR_UNKNOWNCOMMAND] = "<command> :Unknown command";
@@ -109,4 +109,5 @@ void Message::_initStaticVars()
 	numericsMap[ERR_NOTONCHANNEL] = "<channel> :You're not on that channel";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
+	numericsMap[ERR_BADCHANMASK] = "<channel> :Bad Channel Mask"
 }

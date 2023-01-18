@@ -25,6 +25,7 @@ enum
 	ERR_NOTONCHANNEL		=	442,	// "<channel> :You're not on that channel"
 	ERR_NEEDMOREPARAMS		=	461,	// "<command> :Not enough parameters"
 	ERR_ALREADYREGISTRED	=	462,	// ":Unauthorized command (already registered)"
+	ERR_BADCHANMASK			=	476,	// ":Bad Channel Mask"
 
 };
 
