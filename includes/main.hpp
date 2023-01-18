@@ -68,5 +68,6 @@ int				cmd_list(Message &message);
 int				cmd_names(Message &message);
 void			cmd_names_inChannel(Message &message, std::string channelName);
 int				cmd_part(Message &message);
+int				cmd_kick(Message &message);
 
 #endif

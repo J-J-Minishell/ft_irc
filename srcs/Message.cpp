@@ -106,8 +106,10 @@ void Message::_initStaticVars()
 	numericsMap[ERR_NONICKNAMEGIVEN] = ":No nickname given";
 	numericsMap[ERR_ERRONEUSNICKNAME] = "<nickname> :Erroneous nickname";
 	numericsMap[ERR_NICKNAMEINUSE] = "<nickname> :Nickname is already in use";
+	numericsMap[ERR_USERNOTINCHANNEL] = "<nick> <channel> :They aren't on that channel";
 	numericsMap[ERR_NOTONCHANNEL] = "<channel> :You're not on that channel";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
-	numericsMap[ERR_BADCHANMASK] = "<channel> :Bad Channel Mask"
+	numericsMap[ERR_BADCHANMASK] = "<channel> :Bad Channel Mask";
+	numericsMap[ERR_CHANOPRIVSNEEDED] = "<channel> :You're not channel operator";
 }

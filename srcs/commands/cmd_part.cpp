@@ -18,7 +18,7 @@ int		cmd_part(Message &message)
 			{
 				messageParam = vectorToString(message.get_params());
 				extractWord(messageParam);
-				line = user->get_mask() + " PART :" + it->second->get_name();
+				line = user->get_mask() + " PART :" + it->first;
 				line += messageParam.empty() ? "\n" : ":" + messageParam + "\n";
 				it->second->send(line, 0);
 				it->second->delete_user(user);

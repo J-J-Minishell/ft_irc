@@ -12,6 +12,7 @@ class Channel
 		std::string			get_name() { return this->_channelName; };
 		channelUsersMap &	get_usersMap() { return this->_usersMap; };
 		bool				is_user_in_chan(User *user) { return _usersMap.find(user) != _usersMap.end(); };
+		int					userPrivileges(User *user) { return _usersMap.find(user)->second ;};
 
 		bool			add_user(User *newUser);
 		void			delete_user(User *user);

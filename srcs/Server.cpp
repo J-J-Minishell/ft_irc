@@ -111,6 +111,7 @@ void	Server::_fillCmdMap()
 	_cmdMap["LIST"] = &cmd_list;
 	_cmdMap["NAMES"] = &cmd_names;
 	_cmdMap["PART"] = &cmd_part;
+	_cmdMap["KICK"] = &cmd_kick;
 }
 
 void	Server::_getAddrinfoStruct()
