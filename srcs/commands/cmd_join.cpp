@@ -1,5 +1,10 @@
 #include "main.hpp"
 
+	//que empiezan con '&' o '#') de
+   //hasta 200 caracteres. Aparte del requisito de que el primer carácter
+   //sea un '&' o un '#', la única restricción es que no puede contener
+   //espacios en blanco (' '), control G (^G o ASCII 7), o una coma (','
+
 int		cmd_join(Message &message)
 {
 	User *user = message.get_user();
@@ -7,7 +12,15 @@ int		cmd_join(Message &message)
 	Channel *newChannel;
 	pairAddChannel pair;
 	std::string line;
+	std::string channelName = message.get_params()[0]; //hola adios
 
+	if (channelName.empty())
+		std::cout << "\nerror\n";//return message.send_numeric(" 431 ", Message::numericsMap[ERR_NONICKNAMEGIVEN]);
+	if (channelName.size() > 200 || (channelName[0] != '&' && channelName[0] != '#'))
+		std::cout << "\nerror\n";//return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
+	for (size_t i = 1; i < channelName.size(); i++)
+		if (channelName[i] == ' ' || (int)channelName[i] == 7 || channelName[i] == ',')
+			std::cout << "\nerror\n";//return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
 	if (user->get_channels().size() < MAXCHANNELS)
 	{
 		newChannel = new Channel(server, user, message.get_params()[0]);
