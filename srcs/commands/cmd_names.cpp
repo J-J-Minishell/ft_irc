@@ -2,14 +2,19 @@
 
 void	cmd_names_inChannel(Message &message, std::string channelName)
 {
-	channelUsersMap &channelUsersMap = *message.get_server().getChannelUsersMap(channelName);
+	channelUsersMap *channelUsersMap = message.get_server().getChannelUsersMap(channelName);
 	channelUsersMap::iterator it;
 	std::string	line;
 
-	it = channelUsersMap.begin();
+	if (!channelUsersMap)
+	{
+		message.send_numeric(" 366 ", findAndReplace(Message::numericsMap[RPL_ENDOFNAMES], "<channel>", channelName));
+		return ;
+	}	
+	it = channelUsersMap->begin();
 	line = "= " + channelName;
 	line += (it->second == 2 ? " :@" : " :") + it->first->get_nick();
-	for (it++; it != channelUsersMap.end(); it++)
+	for (it++; it != channelUsersMap->end(); it++)
 		line += (it->second == 2 ? " @" : " ") + it->first->get_nick();
 
 	message.send_numeric(" 353 ", line);

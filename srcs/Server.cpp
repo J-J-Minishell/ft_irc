@@ -205,7 +205,7 @@ void	Server::_serverInput(void)
 	std::string		buffer;
 
 	std::getline(std::cin, buffer);
-	if (std::cin && buffer == "shutdown")
+	if (std::cin && strToUpper(buffer) == "SHUTDOWN")
 	{
 		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
 		{

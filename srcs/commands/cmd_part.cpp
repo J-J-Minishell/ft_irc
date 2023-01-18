@@ -16,11 +16,10 @@ int		cmd_part(Message &message)
 		{
 			if (it->second->is_user_in_chan(user))
 			{
-				messageParam = vectorToString(message.get_params());
-				extractWord(messageParam);
+				messageParam = vectorToString(std::vector<std::string>(message.get_params().begin() + 1, message.get_params().end()));
 				line = user->get_mask() + " PART :" + it->first;
 				line += messageParam.empty() ? "\n" : ":" + messageParam + "\n";
-				it->second->send(line, 0);
+				it->second->send(line, -1);
 				it->second->delete_user(user);
 			}
 			else
