@@ -212,7 +212,7 @@ void	Server::_serverInput(void)
 			send_all(it->second->get_fd(), "**** SERVER SHUTDOWN ****");
 			delete it->second;
 		}
-		free(this->_server_info);
+		freeaddrinfo(this->_server_info);
 		this->_run = false;
 	}
 }
