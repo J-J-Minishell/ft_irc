@@ -252,7 +252,8 @@ void	Server::_checkInputs(void)
 
 int	Server::_checkTime(User *user)
 {
-	std::string line;
+	std::vector<User *>	userVector;
+	std::string			line;
 
 	if (user->isRegistered())
 	{
@@ -265,6 +266,11 @@ int	Server::_checkTime(User *user)
 		{
 			line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") [Ping timeout]\n";
 			send_all(user, line.c_str());
+			line = ":" + user->get_mask() + " QUIT :Ping timeout\n";
+			userVector = user->get_users_from_channels();
+			for (size_t i = 0; i < userVector.size(); i++)
+				if (userVector[i] != user)
+					send_all(userVector[i], line.c_str());
 			this->quitUser(user);
 			return 1;
 		}
