@@ -21,8 +21,9 @@
 # define MAXUSERS		10
 # define MAXBUFFER		512
 # define MAXCHANNELS	5
-
 # define MAXNICKLENGTH	9
+# define CHANNELNAMELEN	50
+
 # define REGTIMEOUT		300
 # define PINGTIMEOUT	90
 # define TIMEOUT		45
