@@ -6,6 +6,7 @@ std::string					Message::prefix;
 Message::Message(Server &server, User *user) : _server(server), _user(user)
 {
 	std::string	line;
+	std::string	registrationCmds = "PASS, QUIT, NICK, USER, PONG";
 	std::string	&bufferLine = this->_user->get_bufferLine();
 
 	if (numericsMap.empty())
@@ -19,10 +20,15 @@ Message::Message(Server &server, User *user) : _server(server), _user(user)
 		cmdMap::iterator it = this->_server.getCmdMap().find(strToUpper(this->_cmd));
 		if (it != this->_server.getCmdMap().end())
 		{
-			if (it->first != "PASS" && !user->get_password() && it->first != "QUIT")
+			if (!user->get_password() && it->first != "PASS" && it->first != "QUIT")
 				send_numeric(" ", "NO PASSWORD GIVEN");
 			else
-				it->second(*this); // llama a la funcion especifica del comando _cmd
+			{
+				if (user->isRegistered() || registrationCmds.find(it->first) != std::string::npos)
+					it->second(*this); // llama a la funcion especifica del comando _cmd
+				else
+					send_numeric(" 451 ", Message::numericsMap[ERR_NOTREGISTERED]);
+			}
 		}
 		else
 			send_numeric(" 421 ", findAndReplace(Message::numericsMap[ERR_UNKNOWNCOMMAND], "<command>", strToUpper(this->_cmd)));
@@ -108,6 +114,7 @@ void Message::_initStaticVars()
 	numericsMap[ERR_NICKNAMEINUSE] = "<nickname> :Nickname is already in use";
 	numericsMap[ERR_USERNOTINCHANNEL] = "<nick> <channel> :They aren't on that channel";
 	numericsMap[ERR_NOTONCHANNEL] = "<channel> :You're not on that channel";
+	numericsMap[ERR_NOTREGISTERED] = ":You have not registered";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
 	numericsMap[ERR_BADCHANMASK] = "<channel> :Bad Channel Mask";
