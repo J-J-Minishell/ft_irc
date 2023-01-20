@@ -31,6 +31,7 @@ enum
 	ERR_ALREADYREGISTRED	=	462,	// ":Unauthorized command (already registered)"
 	ERR_PASSWDMISMATCH		=	464,	// ":Password incorrect"
 	ERR_BADCHANMASK			=	476,	// ":Bad Channel Mask"
+	ERR_NOPRIVILEGES		=	481,	// ":Permission Denied- You're not an IRC operator"
 	ERR_CHANOPRIVSNEEDED	=	482,	// "<channel> :You're not channel operator"
 };
 

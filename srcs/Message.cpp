@@ -121,5 +121,6 @@ void Message::_initStaticVars()
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
 	numericsMap[ERR_PASSWDMISMATCH] = ":Password incorrect";
 	numericsMap[ERR_BADCHANMASK] = "<channel> :Bad Channel Mask";
+	numericsMap[ERR_NOPRIVILEGES] = ":Permission Denied- You're not an IRC operator";
 	numericsMap[ERR_CHANOPRIVSNEEDED] = "<channel> :You're not channel operator";
 }

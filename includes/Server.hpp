@@ -9,6 +9,7 @@ class Server
 		static Server*		createInstance(const char *port, std::string passwd);
 		static void			deleteInstance(void);
 		void				run(void);
+		void				shutdown();
 
 		UserMap	&			getUserMap() { return this->_usersMap; };
 		cmdMap	&			getCmdMap() { return this->_cmdMap; };

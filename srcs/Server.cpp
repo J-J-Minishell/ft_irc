@@ -33,6 +33,19 @@ void	Server::deleteInstance(void)
 	Server::_instance = NULL;
 }
 
+void	Server::shutdown()
+{
+	for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
+	{
+		send_all(it->second, "**** SERVER SHUTDOWN ****\n");
+		delete it->second;
+	}
+	this->_usersMap.clear();
+	freeaddrinfo(this->_server_info);
+	this->_run = false;
+	std::cout << "************   " ERR_RED "SHUTDOWN" RESET_COLOR "   ************\n"<< std::endl;
+}
+
 // ---------------------- RUN (MAIN LOOP) ----------------------
 
 void	Server::run(void)
@@ -118,6 +131,7 @@ void	Server::_fillCmdMap()
 	_cmdMap["PART"] = &cmd_part;
 	_cmdMap["KICK"] = &cmd_kick;
 	_cmdMap["OPER"] = &cmd_oper;
+	_cmdMap["DIE"] = &cmd_die;
 }
 
 void	Server::_getAddrinfoStruct()
@@ -213,15 +227,7 @@ void	Server::_serverInput(void)
 
 	std::getline(std::cin, buffer);
 	if (std::cin && strToUpper(buffer) == "SHUTDOWN")
-	{
-		for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
-		{
-			send_all(it->second, "**** SERVER SHUTDOWN ****");
-			delete it->second;
-		}
-		freeaddrinfo(this->_server_info);
-		this->_run = false;
-	}
+		this->shutdown();
 }
 
 void	Server::_checkInputs(void)

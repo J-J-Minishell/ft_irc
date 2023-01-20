@@ -31,6 +31,7 @@
 # define RESET_COLOR	"\033[0m"
 # define MASK_BLUE		"\033[1;34m"
 # define INFO_GREEN		"\033[1;32m"
+# define ERR_RED		"\033[1;31m"
 
 # define SERVER_VERSION "irc-0.1"
 
@@ -74,5 +75,6 @@ void			cmd_names_inChannel(Message &message, std::string channelName);
 int				cmd_part(Message &message);
 int				cmd_kick(Message &message);
 int				cmd_oper(Message &message);
+int				cmd_die(Message &message);
 
 #endif
