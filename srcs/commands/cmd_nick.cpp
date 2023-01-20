@@ -17,9 +17,14 @@ int		cmd_nick(Message &message)
 		if (!std::isalpha(newNickname[i]) && !std::isdigit(newNickname[i]) && specialChar.find(newNickname[i]) == std::string::npos)
 			return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
 
-	for (UserMapIterator it = message.get_server().getUserMap().begin(); it != message.get_server().getUserMap().end(); it++)
-		if (it->second->get_nick() == newNickname)
-			return message.send_numeric(" 433 ", Message::numericsMap[ERR_NICKNAMEINUSE]);
+	if (user.get_nick() == newNickname)
+		return 0;
+	if (strToUpper(user.get_nick()) != strToUpper(newNickname))
+	{
+		for (UserMapIterator it = message.get_server().getUserMap().begin(); it != message.get_server().getUserMap().end(); it++)
+			if (strToUpper(it->second->get_nick()) == strToUpper(newNickname))
+				return message.send_numeric(" 433 ", Message::numericsMap[ERR_NICKNAMEINUSE]);
+	}
 
 	line = user.get_mask() + " NICK :" + newNickname + "\n";
 	user.set_nick(newNickname);
