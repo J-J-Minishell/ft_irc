@@ -34,6 +34,9 @@
 
 # define SERVER_VERSION "irc-0.1"
 
+# define OPERPASSWORD		"1234"
+# define OPERLOGIN			"operator"
+
 # define SPECIALCHAR    "-[]\\`^{}"
 
 class Server;
@@ -70,5 +73,6 @@ int				cmd_names(Message &message);
 void			cmd_names_inChannel(Message &message, std::string channelName);
 int				cmd_part(Message &message);
 int				cmd_kick(Message &message);
+int				cmd_oper(Message &message);
 
 #endif

@@ -103,6 +103,8 @@ void Message::_initStaticVars()
 
 	numericsMap[RPL_LISTEND] = ":End of LIST";
 	numericsMap[RPL_ENDOFNAMES] = "<channel> :End of NAMES list";
+	numericsMap[RPL_YOUREOPER] = ":You are now an IRC operator";
+
 	numericsMap[ERR_NOSUCHNICK] = "<nickname> :No such nick/channel";
 	numericsMap[ERR_NOSUCHCHANNEL] = "<channel name> :No such channel";
 	numericsMap[ERR_CANNOTSENDTOCHAN] = "<channel name> :Cannot send to channel";
@@ -117,6 +119,7 @@ void Message::_initStaticVars()
 	numericsMap[ERR_NOTREGISTERED] = ":You have not registered";
 	numericsMap[ERR_NEEDMOREPARAMS] = "<command> :Not enough parameters";
 	numericsMap[ERR_ALREADYREGISTRED] = ":Unauthorized command (already registered)";
+	numericsMap[ERR_PASSWDMISMATCH] = ":Password incorrect";
 	numericsMap[ERR_BADCHANMASK] = "<channel> :Bad Channel Mask";
 	numericsMap[ERR_CHANOPRIVSNEEDED] = "<channel> :You're not channel operator";
 }

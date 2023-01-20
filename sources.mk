@@ -19,6 +19,7 @@ COMMAND_SRCS	=	\
 					cmd_list.cpp				\
 					cmd_part.cpp				\
 					cmd_kick.cpp				\
+					cmd_oper.cpp				\
 					cmd_names.cpp
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRCS))			\

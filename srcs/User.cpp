@@ -4,6 +4,7 @@
 
 User::User(int fd, Server& server) : _fd(fd), _server(server), _nick("*"), _username("unknown")
 {
+	this->_oper = false;
 	this->_registered = false;
 	this->_password = false;
 	this->_registTime = time(NULL);

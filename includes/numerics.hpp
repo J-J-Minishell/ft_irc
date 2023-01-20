@@ -13,6 +13,8 @@ enum
 	
 	RPL_LISTEND				=	323,	// ":End of LIST"
 	RPL_ENDOFNAMES			=	366,	// "<channel> :End of NAMES list"
+	RPL_YOUREOPER			=	381,	// ":You are now an IRC operator"
+
 	ERR_NOSUCHNICK			=	401,	// "<nickname> :No such nick/channel"
 	ERR_NOSUCHCHANNEL		=	403,	// "<channel name> :No such channel"
 	ERR_CANNOTSENDTOCHAN	=	404,	// "<channel name> :Cannot send to channel"
@@ -27,9 +29,9 @@ enum
 	ERR_NOTREGISTERED		=	451,	// ":You have not registered"
 	ERR_NEEDMOREPARAMS		=	461,	// "<command> :Not enough parameters"
 	ERR_ALREADYREGISTRED	=	462,	// ":Unauthorized command (already registered)"
+	ERR_PASSWDMISMATCH		=	464,	// ":Password incorrect"
 	ERR_BADCHANMASK			=	476,	// ":Bad Channel Mask"
 	ERR_CHANOPRIVSNEEDED	=	482,	// "<channel> :You're not channel operator"
-
 };
 
 #endif

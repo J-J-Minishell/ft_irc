@@ -31,6 +31,8 @@ class User
 		bool					is_in_channel(Channel *channel);
 		std::vector<Channel*> &	get_channels() { return this->_channels; };
 		std::vector<User*>		get_users_from_channels();
+		void					setOper() { this->_oper = true; };
+		bool					isOper() { return this->_oper; };
 
 		void					updateMask(void);
 		const std::string&		get_mask(void) const { return this->_mask; };
@@ -55,6 +57,7 @@ class User
 		std::string				_host;
 		std::string				_bufferLine;
 
+		bool			_oper;
 		bool			_registered;
 		bool			_password;
 		time_t			_registTime;
