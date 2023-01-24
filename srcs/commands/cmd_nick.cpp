@@ -10,7 +10,7 @@ int		cmd_nick(Message &message)
 	if (message.get_params().empty())
 		return message.send_numeric(" 431 ", Message::numericsMap[ERR_NONICKNAMEGIVEN]);
 
-	if (newNickname.size() > 9 || (!isalpha(newNickname[0]) && specialChar.find(newNickname[0]) == std::string::npos))
+	if (newNickname.size() > MAXNICKLENGTH || (!isalpha(newNickname[0]) && specialChar.find(newNickname[0]) == std::string::npos))
 		return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
 
 	for (size_t i = 1; i < newNickname.size(); i++)

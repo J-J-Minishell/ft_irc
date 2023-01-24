@@ -19,5 +19,6 @@ std::string		strToUpper(std::string str);
 void			cleanSignalsFromStr(std::string &str);
 std::string		findAndReplace(std::string str, std::string findStr, std::string replaceStr);
 std::string     vectorToString(std::vector<std::string> vector);
+std::string     maxBuffer_trim(std::string &line, int maxBuffer);
 
 #endif

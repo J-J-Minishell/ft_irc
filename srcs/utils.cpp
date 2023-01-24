@@ -8,8 +8,8 @@ std::string	extractWord(std::string& data)
 	pos = data.find(' ');
 	if (pos != std::string::npos)
 	{
-		newStr = data.substr(0, pos);
-		data.erase(0, pos + 1);
+		newStr = pos == 0 ? data.substr(0, 1) : data.substr(0, pos);
+		pos == 0 ? data.erase(0, 1) : data.erase(0, pos);
 		return newStr;
 	}
 	newStr = data;
@@ -45,6 +45,27 @@ int		send_all(User *user, const char* buffer)
 		length -= num_bytes;
 	}
 	return 0;
+}
+
+std::string	maxBuffer_trim(std::string &line, int maxBuffer)
+{
+	std::string	sortedLine;
+	std::string nextWord;
+	std::string	tmpLine = line;
+
+	for (; !tmpLine.empty(); )
+	{
+		nextWord = extractWord(tmpLine);
+		if ((int)(sortedLine.size() + nextWord.size()) < maxBuffer)
+		{
+			extractWord(line);
+			sortedLine += nextWord;
+		}
+		else
+			return sortedLine;
+	}
+	line.clear();
+	return sortedLine;
 }
 
 void	leftTrim(std::string& str)

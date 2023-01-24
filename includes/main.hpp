@@ -19,7 +19,7 @@
 
 
 # define MAXUSERS		10
-# define MAXBUFFER		512
+# define MAXBUFFER		510
 # define MAXCHANNELS	5
 # define MAXNICKLENGTH	9
 # define CHANNELNAMELEN	50

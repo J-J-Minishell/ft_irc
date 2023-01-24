@@ -12,12 +12,12 @@ void	cmd_names_inChannel(Message &message, std::string channelName)
 		return ;
 	}	
 	it = channelUsersMap->begin();
-	line = "= " + channelName;
-	line += (it->second == 2 ? " :@" : " :") + it->first->get_nick();
+
+	line = (it->second == 2 ? "@" : "") + it->first->get_nick();
 	for (it++; it != channelUsersMap->end(); it++)
 		line += (it->second == 2 ? " @" : " ") + it->first->get_nick();
 
-	message.send_numeric(" 353 ", line);
+	message.send_numeric(" 353 ", line, ("= " + channelName + " :"));
 	message.send_numeric(" 366 ", findAndReplace(Message::numericsMap[RPL_ENDOFNAMES], "<channel>", channelName));
 }
 
@@ -31,10 +31,10 @@ int		cmd_names(Message &message)
 	if (message.get_params().empty())
 	{
 		it = userMap.begin();
-		line = "= " + server.getServerName() + " :" + it->second->get_nick();
+		line = it->second->get_nick();
 		for (it++ ; it != userMap.end(); it++)
 			line += " " + it->second->get_nick();
-		message.send_numeric(" 353 ", line);
+		message.send_numeric(" 353 ", line, ("= " + server.getServerName() + " :"));
 		message.send_numeric(" 366 ", findAndReplace(Message::numericsMap[RPL_ENDOFNAMES], "<channel>", server.getServerName()));
 	}
 	else

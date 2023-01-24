@@ -57,16 +57,24 @@ void Message::set_message(std::string line)
 		if (line[0] == ':')
 			return this->_params.push_back(line.erase(0, 1));
 		param = extractWord(line);
-		this->_params.push_back(param);
+		if (!param.empty() && param != " ")
+			this->_params.push_back(param);
 	}
 }
 
-int	Message::send_numeric(std::string numeric, std::string numericStr)
+int	Message::send_numeric(std::string numeric, std::string numericStr, std::string numericPrefix)
 {
-	std::string	line;
+	std::string	linePrefix;
 
-	line = prefix + numeric + this->_user->get_nick() + " " + numericStr + "\n";
-	send_all(this->_user, line.c_str());
+	linePrefix = prefix + numeric + this->_user->get_nick() + " " + numericPrefix;
+
+	while (!numericStr.empty())
+	{
+		if (linePrefix.size() + numericStr.size() > MAXBUFFER)
+			send_all(this->_user, (linePrefix + maxBuffer_trim(numericStr, MAXBUFFER - linePrefix.size()) + "\r\n").c_str());
+		else
+			return send_all(this->_user, (linePrefix + numericStr + "\r\n").c_str());
+	}
 
 	return -1;
 }
