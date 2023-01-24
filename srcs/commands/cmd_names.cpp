@@ -31,9 +31,9 @@ int		cmd_names(Message &message)
 	if (message.get_params().empty())
 	{
 		it = userMap.begin();
-		line = it->second->get_nick();
+		line = (it->second->isOper() ? "@" : "") + it->second->get_nick();
 		for (it++ ; it != userMap.end(); it++)
-			line += " " + it->second->get_nick();
+			line += (it->second->isOper() ? " @" : " ") + it->second->get_nick();
 		message.send_numeric(" 353 ", line, ("= " + server.getServerName() + " :"));
 		message.send_numeric(" 366 ", findAndReplace(Message::numericsMap[RPL_ENDOFNAMES], "<channel>", server.getServerName()));
 	}
