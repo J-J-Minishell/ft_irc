@@ -47,7 +47,7 @@ int		cmd_privmsg(Message &message)
 		return notice ? 0 : message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PRIVMSG")) ;
 
 	line = vectorToString(std::vector<std::string>(params.begin() + 1, params.end()));
-	line = ":" + message.get_user()->get_mask() + (notice ? " NOTICE " : " PRIVMSG ") + params[0] + " :" + line + "\n";
+	line = ":" + message.get_user()->get_mask() + (notice ? " NOTICE " : " PRIVMSG ") + params[0] + " :" + line + "\r\n";
 
 	if (!find_nick(message, line) && !find_channel(message, line, notice))
 		return notice ? 0 : message.send_numeric(" 401 ", findAndReplace(Message::numericsMap[ERR_NOSUCHNICK], "<nickname>", params[0]));

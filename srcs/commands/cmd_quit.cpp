@@ -8,16 +8,16 @@ int		cmd_quit(Message &message)
 
 	line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") ";
 	if (!message.get_params().empty())
-		line += "[" + message.get_params()[0] + "]\n";
+		line += "[" + message.get_params()[0] + "]\r\n";
 	else
-		line += "[Client exited]\n";
+		line += "[Client exited]\r\n";
 	
 	send_all(user, line.c_str());
 
 	if (!message.get_params().empty())
-		line = ":" + user->get_mask() + "QUIT :" + message.get_params()[0] + "\n";
+		line = ":" + user->get_mask() + "QUIT :" + message.get_params()[0] + "\r\n";
 	else
-		line = ":" + user->get_mask() + "QUIT :Client exited\n";
+		line = ":" + user->get_mask() + "QUIT :Client exited\r\n";
 
 	message.send_message(user->get_users_from_channels(), line);
 	server.quitUser(user);

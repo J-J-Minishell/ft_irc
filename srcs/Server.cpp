@@ -37,7 +37,7 @@ void	Server::shutdown()
 {
 	for (UserMapIterator it = this->_usersMap.begin(); it != this->_usersMap.end(); it++)
 	{
-		send_all(it->second, "**** SERVER SHUTDOWN ****\n");
+		send_all(it->second, "**** SERVER SHUTDOWN ****\r\n");
 		delete it->second;
 	}
 	this->_usersMap.clear();
@@ -207,7 +207,7 @@ void	Server::_checkConnection(void)
 		else if(this->_numPollfds >= MAXUSERS + 2)
 		{
 			User tmpUser(new_fd, *this);
-			send_all(&tmpUser, "The server is full. Please, try again later\n");
+			send_all(&tmpUser, "The server is full. Please, try again later\r\n");
 			std::cerr << "User tried to connect but server is full" << std::endl;
 			close(new_fd);
 			return ;
@@ -267,13 +267,13 @@ int	Server::_checkTime(User *user)
 		if (!user->get_timeout() && (user->get_time() + PINGTIMEOUT < time(NULL)))
 		{
 			user->set_timeout(time(NULL) + TIMEOUT);
-			send_all(user, "PING irc-serv\n");
+			send_all(user, "PING irc-serv\r\n");
 		}
 		else if (user->get_timeout() && user->get_timeout() < time(NULL))
 		{
-			line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") [Ping timeout]\n";
+			line = "ERROR :Closing link: (" + user->get_username() + "@" + user->get_host() + ") [Ping timeout]\r\n";
 			send_all(user, line.c_str());
-			line = ":" + user->get_mask() + " QUIT :Ping timeout\n";
+			line = ":" + user->get_mask() + " QUIT :Ping timeout\r\n";
 			userVector = user->get_users_from_channels();
 			for (size_t i = 0; i < userVector.size(); i++)
 				if (userVector[i] != user)
@@ -286,7 +286,7 @@ int	Server::_checkTime(User *user)
 	{
 		if ((user->get_registTime() + REGTIMEOUT) <= time(NULL))
 		{
-			send_all(user, "PONG ERROR [Registration timeout]\n");
+			send_all(user, "PONG ERROR [Registration timeout]\r\n");
 			this->quitUser(user);
 			return 1;
 		}

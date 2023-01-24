@@ -26,7 +26,7 @@ int		cmd_nick(Message &message)
 				return message.send_numeric(" 433 ", Message::numericsMap[ERR_NICKNAMEINUSE]);
 	}
 
-	line = user.get_mask() + " NICK :" + newNickname + "\n";
+	line = user.get_mask() + " NICK :" + newNickname + "\r\n";
 	user.set_nick(newNickname);
 	user.updateMask();
 
@@ -37,7 +37,7 @@ int		cmd_nick(Message &message)
 	}
 
 	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")
-		send_all(&user, "PING :irc-serv\n");
+		send_all(&user, "PING :irc-serv\r\n");
 	return 0;
 }
    

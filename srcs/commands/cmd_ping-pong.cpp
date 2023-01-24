@@ -7,7 +7,7 @@ int		cmd_ping(Message &message)
 
 	if (message.get_params().empty())
 		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PING"));
-	line = message.prefix + " PONG " + message.get_server().getServerName() + " :" + message.get_params()[0] + "\n";
+	line = message.prefix + " PONG " + message.get_server().getServerName() + " :" + message.get_params()[0] + "\r\n";
 	send_all(&user, line.c_str());
 
 	return 0;

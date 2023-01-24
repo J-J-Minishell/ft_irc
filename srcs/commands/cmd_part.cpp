@@ -18,7 +18,7 @@ int		cmd_part(Message &message)
 			{
 				messageParam = vectorToString(std::vector<std::string>(message.get_params().begin() + 1, message.get_params().end()));
 				line = user->get_mask() + " PART :" + it->first;
-				line += messageParam.empty() ? "\n" : ":" + messageParam + "\n";
+				line += messageParam.empty() ? "\r\n" : (":" + messageParam + "\r\n");
 				it->second->send(line, -1);
 				it->second->delete_user(user);
 			}

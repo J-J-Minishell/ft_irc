@@ -28,7 +28,7 @@ int		cmd_join(Message &message)
 	else
 		return message.send_numeric(" 405 ", findAndReplace(Message::numericsMap[ERR_TOOMANYCHANNELS], "<channel name>", channelName));
 
-	pair.first->second->send(user->get_mask() + " JOIN :" + channelName + "\n", -1);
+	pair.first->second->send(user->get_mask() + " JOIN :" + channelName + "\r\n", -1);
 	cmd_names_inChannel(message, channelName);
 
 	return -1;
