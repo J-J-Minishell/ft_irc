@@ -26,7 +26,7 @@ int		cmd_nick(Message &message)
 				return message.send_numeric(" 433 ", Message::numericsMap[ERR_NICKNAMEINUSE]);
 	}
 
-	line = user.get_mask() + " NICK :" + newNickname + "\r\n";
+	line = ":" + user.get_mask() + " NICK :" + newNickname + "\r\n";
 	user.set_nick(newNickname);
 	user.updateMask();
 
