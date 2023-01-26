@@ -22,10 +22,9 @@ int		cmd_join(Message &message)
 			pair = message.get_server().addChannel(newChannel);
 			if (pair.second == false)
 				delete newChannel;
-			if (pair.first->second->add_user(user) == true)
-				user->add_channel(pair.first->second);
-			else
+			if (pair.second == true || pair.first->second->add_user(user) == true)
 			{
+				user->add_channel(pair.first->second);
 				pair.first->second->send(":" + user->get_mask() + " JOIN :" + channelNames[i] + "\r\n", -1);
 				cmd_names_inChannel(message, channelNames[i]);
 			}

@@ -30,6 +30,7 @@ class User
 		void					add_channel(Channel *channel);
 		bool					is_in_channel(Channel *channel);
 		std::vector<Channel*> &	get_channels() { return this->_channels; };
+		std::vector<std::string> get_channelsNames();
 		std::vector<User*>		get_users_from_channels();
 		void					setOper() { this->_oper = true; };
 		bool					isOper() { return this->_oper; };

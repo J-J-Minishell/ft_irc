@@ -66,6 +66,16 @@ std::vector<User*>	User::get_users_from_channels()
 	return retUsers;
 }
 
+std::vector<std::string> User::get_channelsNames()
+{
+	std::vector<std::string>		channelsNames;
+	std::vector<Channel*>::iterator	it;
+
+	for (it = this->_channels.begin(); it != _channels.end(); it++)
+		channelsNames.push_back((*it)->get_name());
+	return channelsNames;
+}
+
 void	User::add_channel(Channel *channel)
 {
 	if (this->_channels.size() < MAXCHANNELS)
