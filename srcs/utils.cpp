@@ -107,6 +107,20 @@ std::string	vectorToString(std::vector<std::string> vector)
 	return line;
 }
 
+std::vector<std::string> stringDelimiter(std::string str, std::string delimiter)
+{
+    std::vector<std::string> words;
+
+    size_t pos = 0;
+    while ((pos = str.find(delimiter)) != std::string::npos) {
+        words.push_back(str.substr(0, pos));
+        str.erase(0, pos + delimiter.length());
+    }
+	if (!str.empty())
+        words.push_back(str);
+	return words;
+}
+
 std::string	findAndReplace(std::string str, std::string findStr, std::string replaceStr)
 {
 	return str.replace(str.find(findStr), findStr.size(), replaceStr);
