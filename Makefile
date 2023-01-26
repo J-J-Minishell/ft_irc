@@ -1,12 +1,14 @@
-NAME		=	ft_irc
-CXX			=	clang++
-CXXFLAGS	=	-Werror -Wall -Wextra -I$(INCL) -std=c++98
-INCL		=	./includes/
-OBJSPATH	=	obj/
-SRCSPATH	=	srcs/
-SERVEROBJS	=	$(patsubst $(SRCSPATH)%, $(OBJSPATH)%, $(SRCS:.cpp=.o))
-DEBUG_FLAGS	=	-g3 -fstandalone-debug $(SANITIZE)
-SANITIZE	=	-fsanitize=address
+NAME			=	ft_irc
+CXX				=	clang++
+CXXFLAGS		=	-Werror -Wall -Wextra -I$(INCL) -std=c++98 $(DEPEND_FLAGS)
+INCL			=	./includes/
+OBJSPATH		=	obj/
+SRCSPATH		=	srcs/
+SERVEROBJS		=	$(patsubst $(SRCSPATH)%, $(OBJSPATH)%, $(SRCS:.cpp=.o))
+DEPS			=	$(SERVEROBJS:.o=.d)
+DEBUG_FLAGS		=	-g3 -fstandalone-debug $(SANITIZE)
+DEPEND_FLAGS	=	-MD
+SANITIZE		=	-fsanitize=address
 
 -include	sources.mk
 
@@ -25,13 +27,16 @@ debug: fclean $(NAME)
 
 clean :
 	rm -f *.o
-		rm -f srcs/*.o
-		rm -f srcs/*.d
 	rm -rf obj
+#		rm -f srcs/*.o
+#		rm -f srcs/*.d
 
 fclean : clean
 	rm -f $(NAME)
 
 re: fclean all
 
+-include	$(DEPS)
+
+.SILENT: clean fclean
 .PHONY: clean fclean all re debug
