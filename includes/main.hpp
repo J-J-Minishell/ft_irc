@@ -47,7 +47,7 @@ class Channel;
 
 	typedef std::map<int, User*>							UserMap;
 	typedef UserMap::iterator								UserMapIterator;
-	typedef std::map<std::string, int (*)(Message &)>		cmdMap;
+	typedef std::map<std::string, void (*)(Message &)>		cmdMap;
 	typedef std::map<std::string, Channel*>					channelsMap;
 	typedef	std::map<User*, int>							channelUsersMap;
 	typedef std::pair<channelsMap::iterator, bool>			pairAddChannel;
@@ -61,20 +61,20 @@ class Channel;
 #include "Channel.hpp"
 #include "utils.hpp"
 
-int				cmd_pass(Message &message);
-int				cmd_nick(Message &message);
-int				cmd_user(Message &message);
-int				cmd_ping(Message &message);
-int				cmd_pong(Message &message);
-int				cmd_quit(Message &message);
-int				cmd_privmsg(Message &message);
-int				cmd_join(Message &message);
-int				cmd_list(Message &message);
-int				cmd_names(Message &message);
+void			cmd_pass(Message &message);
+void			cmd_nick(Message &message);
+void			cmd_user(Message &message);
+void			cmd_ping(Message &message);
+void			cmd_pong(Message &message);
+void			cmd_quit(Message &message);
+void			cmd_privmsg(Message &message);
+void			cmd_join(Message &message);
+void			cmd_list(Message &message);
+void			cmd_names(Message &message);
 void			cmd_names_inChannel(Message &message, std::string channelName);
-int				cmd_part(Message &message);
-int				cmd_kick(Message &message);
-int				cmd_oper(Message &message);
-int				cmd_die(Message &message);
+void			cmd_part(Message &message);
+void			cmd_kick(Message &message);
+void			cmd_oper(Message &message);
+void			cmd_die(Message &message);
 
 #endif

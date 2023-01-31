@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_kick(Message &message)
+void	cmd_kick(Message &message)
 {
 	std::vector<std::string>	&params = message.get_params();
 	Server						&server = message.get_server();
@@ -43,7 +43,7 @@ int		cmd_kick(Message &message)
 				else
 					message.send_numeric(" 442 ", findAndReplace(Message::numericsMap[ERR_NOTONCHANNEL], "<channel>", message.get_params()[0]));			
 			}
-			return 0;
+			return ;
 		}
 	}
 

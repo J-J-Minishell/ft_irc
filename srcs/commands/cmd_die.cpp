@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_die(Message &message)
+void	cmd_die(Message &message)
 {
 	User	*user = message.get_user();
 	Server	&server = message.get_server();
@@ -10,5 +10,4 @@ int		cmd_die(Message &message)
 
 	server.shutdown();
 	message.delete_user();
-	return -1;
 }

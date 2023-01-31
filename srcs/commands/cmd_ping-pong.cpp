@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_ping(Message &message)
+void	cmd_ping(Message &message)
 {
 	User		&user = *message.get_user();
 	std::string	line;
@@ -9,11 +9,9 @@ int		cmd_ping(Message &message)
 		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PING"));
 	line = message.prefix + " PONG " + message.get_server().getServerName() + " :" + message.get_params()[0] + "\r\n";
 	send_all(&user, line.c_str());
-
-	return 0;
 }
 
-int		cmd_pong(Message &message)
+void	cmd_pong(Message &message)
 {
 	User		&user = *message.get_user();
 	std::string	line;
@@ -23,6 +21,4 @@ int		cmd_pong(Message &message)
 
 	user.reset_time();
 	user.set_timeout(0);
-
-	return 0;
 }

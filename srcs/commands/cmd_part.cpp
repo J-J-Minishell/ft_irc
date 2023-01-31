@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_part(Message &message)
+void	cmd_part(Message &message)
 {
 	channelsMap					&channelsMap = message.get_server().getChannelsMap();
 	User						*user = message.get_user();
@@ -38,6 +38,4 @@ int		cmd_part(Message &message)
 		if (it == channelsMap.end())
 			message.send_numeric(" 403 ", findAndReplace(Message::numericsMap[ERR_NOSUCHCHANNEL], "<channel name>", message.get_params()[0]));
 	}
-
-	return 0;
 }

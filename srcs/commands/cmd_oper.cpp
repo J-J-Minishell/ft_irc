@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_oper(Message &message)
+void	cmd_oper(Message &message)
 {
 	std::vector<std::string>	&params = message.get_params();
 
@@ -12,5 +12,4 @@ int		cmd_oper(Message &message)
 
 	message.get_user()->setOper();
 	message.send_numeric(" 381 ", Message::numericsMap[RPL_YOUREOPER]);
-	return -1;
 }

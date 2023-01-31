@@ -62,7 +62,7 @@ void Message::set_message(std::string line)
 	}
 }
 
-int	Message::send_numeric(std::string numeric, std::string numericStr, std::string numericPrefix)
+void	Message::send_numeric(std::string numeric, std::string numericStr, std::string numericPrefix)
 {
 	std::string	linePrefix;
 
@@ -73,10 +73,11 @@ int	Message::send_numeric(std::string numeric, std::string numericStr, std::stri
 		if (linePrefix.size() + numericStr.size() > MAXBUFFER)
 			send_all(this->_user, (linePrefix + maxBuffer_trim(numericStr, MAXBUFFER - linePrefix.size()) + "\r\n").c_str());
 		else
-			return send_all(this->_user, (linePrefix + numericStr + "\r\n").c_str());
+		{
+			send_all(this->_user, (linePrefix + numericStr + "\r\n").c_str());
+			return ;
+		}
 	}
-
-	return -1;
 }
 
 void	Message::welcome_user()

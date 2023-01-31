@@ -28,14 +28,17 @@ int		find_channel(Message &message, std::string line, bool notice)
 			if (message.get_user()->is_in_channel(it->second))
 				it->second->send(line.c_str(), message.get_user()->get_fd());
 			else
-				notice ? 0 : message.send_numeric(" 404 ", findAndReplace(Message::numericsMap[ERR_CANNOTSENDTOCHAN], "<channel name>", params[0]));
+			{
+				if (!notice)
+					message.send_numeric(" 404 ", findAndReplace(Message::numericsMap[ERR_CANNOTSENDTOCHAN], "<channel name>", params[0]));
+			}
 			return 1;
 		}
 	}
 	return 0;
 }
 
-int		cmd_privmsg(Message &message)
+void	cmd_privmsg(Message &message)
 {
 	std::vector<std::string>	&params = message.get_params();
 	std::string					line;
@@ -44,13 +47,18 @@ int		cmd_privmsg(Message &message)
 	if (strToUpper(message.get_cmd()) == "NOTICE")
 		notice = true;
 	if (params.size() < 2)
-		return notice ? 0 : message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PRIVMSG")) ;
+	{
+		if (!notice)
+			message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PRIVMSG")) ;
+		return ;
+	}
 
 	line = vectorToString(std::vector<std::string>(params.begin() + 1, params.end()));
 	line = ":" + message.get_user()->get_mask() + (notice ? " NOTICE " : " PRIVMSG ") + params[0] + " :" + line + "\r\n";
 
 	if (!find_nick(message, line) && !find_channel(message, line, notice))
-		return notice ? 0 : message.send_numeric(" 401 ", findAndReplace(Message::numericsMap[ERR_NOSUCHNICK], "<nickname>", params[0]));
-
-	return 0;
+	{
+		if (!notice)
+			message.send_numeric(" 401 ", findAndReplace(Message::numericsMap[ERR_NOSUCHNICK], "<nickname>", params[0]));
+	}
 }

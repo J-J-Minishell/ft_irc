@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_nick(Message &message)
+void	cmd_nick(Message &message)
 {
 	User &user = *message.get_user();
 	std::string &newNickname = message.get_params()[0];
@@ -18,7 +18,7 @@ int		cmd_nick(Message &message)
 			return message.send_numeric(" 432 ", Message::numericsMap[ERR_ERRONEUSNICKNAME]);
 
 	if (user.get_nick() == newNickname)
-		return 0;
+		return ;
 	if (strToUpper(user.get_nick()) != strToUpper(newNickname))
 	{
 		for (UserMapIterator it = message.get_server().getUserMap().begin(); it != message.get_server().getUserMap().end(); it++)
@@ -38,6 +38,5 @@ int		cmd_nick(Message &message)
 
 	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")
 		send_all(&user, "PING :irc-serv\r\n");
-	return 0;
 }
    

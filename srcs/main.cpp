@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	Server*			server;
 	int				serverPort;
@@ -29,6 +29,6 @@ int main(int argc, char **argv)
 	server->run();
 
 	Server::deleteInstance();
-	system("leaks ft_irc");
+
 	return 0;
 }

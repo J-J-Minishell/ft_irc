@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_user(Message &message)
+void	cmd_user(Message &message)
 {
 	User		&user = *message.get_user();
 	std::string	numericStr;
@@ -17,5 +17,4 @@ int		cmd_user(Message &message)
 		return message.send_numeric(" 462 ", Message::numericsMap[ERR_ALREADYREGISTRED]);
 
 	user.updateMask();
-	return 0;
 }

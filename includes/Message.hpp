@@ -21,7 +21,7 @@ class Message
 		std::vector<std::string>&	get_params() { return this->_params; };
 
 		void		welcome_user();
-		int			send_numeric(std::string numeric, std::string numericStr, std::string numericPrefix = "");
+		void		send_numeric(std::string numeric, std::string numericStr, std::string numericPrefix = "");
 		void		delete_user() { this->_user = NULL; };
 		void		send_message(std::vector<User *> userVector, std::string line);
 

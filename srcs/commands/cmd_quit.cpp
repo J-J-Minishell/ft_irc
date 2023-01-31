@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_quit(Message &message)
+void	cmd_quit(Message &message)
 {
 	User *user = message.get_user();
 	Server &server = message.get_server();
@@ -22,5 +22,4 @@ int		cmd_quit(Message &message)
 	message.send_message(user->get_users_from_channels(), line);
 	server.quitUser(user);
 	message.delete_user();
-	return -1;
 }

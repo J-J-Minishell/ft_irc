@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_pass(Message &message)
+void	cmd_pass(Message &message)
 {
 	User		&user = *message.get_user();
 
@@ -10,5 +10,4 @@ int		cmd_pass(Message &message)
 		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "PASS"));
 	if (message.get_params()[0] == message.get_server().getPassword())
 		user.set_password(1);
-	return 0;
 }

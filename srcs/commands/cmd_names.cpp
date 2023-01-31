@@ -21,7 +21,7 @@ void	cmd_names_inChannel(Message &message, std::string channelName)
 	message.send_numeric(" 366 ", findAndReplace(Message::numericsMap[RPL_ENDOFNAMES], "<channel>", channelName));
 }
 
-int		cmd_names(Message &message)
+void	cmd_names(Message &message)
 {
 	Server			&server = message.get_server();
 	UserMap			&userMap = server.getUserMap();
@@ -39,5 +39,4 @@ int		cmd_names(Message &message)
 	}
 	else
 		cmd_names_inChannel(message, message.get_params()[0]);
-	return 0;
 }

@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int		cmd_join(Message &message)
+void	cmd_join(Message &message)
 {
 	User *						user = message.get_user();
 	Channel *					newChannel;
@@ -32,6 +32,4 @@ int		cmd_join(Message &message)
 		else if ((user->get_channels().size() >= MAXCHANNELS))
 			message.send_numeric(" 405 ", findAndReplace(Message::numericsMap[ERR_TOOMANYCHANNELS], "<channel name>", channelNames[i]));
 	}
-
-	return -1;
 }
