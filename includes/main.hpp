@@ -36,7 +36,7 @@
 # define ERR_RED		"\033[1;31m"
 # define CHANNEL_YELLOW	"\033[1;33m"
 
-# define SERVER_VERSION "irc-0.1"
+# define SERVER_VERSION "irc-1.0"
 
 # define OPERPASSWORD		"1234"
 # define OPERLOGIN			"operator"

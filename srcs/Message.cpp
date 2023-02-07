@@ -108,7 +108,7 @@ void Message::_initStaticVars()
 	numericsMap[RPL_WELCOME] = "Welcome to the Internet Relay Network <nick>!<user>@<host>";
 	numericsMap[RPL_YOURHOST] = "Your host is " + this->_server.getServerName() + ", running version " SERVER_VERSION;
 	numericsMap[RPL_CREATED] = "This server was created " __TIME__ " " __DATE__;
-	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <available user modes> <available channel modes>";
+	numericsMap[RPL_MYINFO] = this->_server.getServerName() + " " SERVER_VERSION " <no user modes> <no channel modes>";
 
 	numericsMap[RPL_LISTEND] = ":End of LIST";
 	numericsMap[RPL_ENDOFNAMES] = "<channel> :End of NAMES list";
