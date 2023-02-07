@@ -246,13 +246,19 @@ void	Server::_checkInputs(void)
 					userTalking->get_bufferLine().find("\r\n") != std::string::npos)
 				{
 					userTalking->limit_bufferLine();
-					//std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
 					message = new Message(*this, userTalking);
 					delete message;
 				}
 			}
 			else
+			{
+				std::vector<User *> userVector;
+				send_all(userTalking, std::string("ERROR :Closing link: (" + userTalking->get_username() + "@" + userTalking->get_host() + ") [Client exited]\r\n").c_str());
+				userVector = userTalking->get_users_from_channels();
+				for (size_t i = 0; i < userVector.size(); i++)
+					send_all(userVector[i], std::string(":" + userTalking->get_mask() + " QUIT :Client exited\r\n").c_str());
 				this->quitUser(userTalking);
+			}
 		}
 	}
 }
