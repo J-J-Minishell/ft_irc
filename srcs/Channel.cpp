@@ -32,7 +32,7 @@ void	Channel::delete_user(User *user)
 	if (this->_usersMap.empty())
 	{
 		this->_server.getChannelsMap().erase(this->_server.getChannelsMap().find(this->get_name()));
-		std::cout << "Channel " << this->get_name() << " deleted" << std::endl;
+		std::cout << ERR_RED "Channel " RESET_COLOR << this->get_name() << ERR_RED " deleted" RESET_COLOR << std::endl;
 		delete this;
 	}
 }

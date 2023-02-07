@@ -21,7 +21,7 @@ void	cmd_kick(Message &message)
 			for (size_t i = 0; i < userNames.size(); i++)
 			{
 				kickUserIt = server.getUserMap().begin();
-				while (kickUserIt != server.getUserMap().end() && kickUserIt->second->get_nick() == userNames[i])
+				while (kickUserIt != server.getUserMap().end() && kickUserIt->second->get_nick() != userNames[i])
 					kickUserIt++;
 				if (kickUserIt == server.getUserMap().end())
 					message.send_numeric(" 401 ", findAndReplace(Message::numericsMap[ERR_NOSUCHNICK], "<nickname>", userNames[i]));

@@ -34,6 +34,7 @@
 # define MASK_BLUE		"\033[1;34m"
 # define INFO_GREEN		"\033[1;32m"
 # define ERR_RED		"\033[1;31m"
+# define CHANNEL_YELLOW	"\033[1;33m"
 
 # define SERVER_VERSION "irc-0.1"
 

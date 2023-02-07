@@ -246,7 +246,7 @@ void	Server::_checkInputs(void)
 					userTalking->get_bufferLine().find("\r\n") != std::string::npos)
 				{
 					userTalking->limit_bufferLine();
-					std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
+					//std::cout << *userTalking << userTalking->get_bufferLine() << std::endl;
 					message = new Message(*this, userTalking);
 					delete message;
 				}

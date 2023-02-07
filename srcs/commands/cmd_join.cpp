@@ -9,12 +9,12 @@ void	cmd_join(Message &message)
 
 	if (message.get_params().empty())
 		return message.send_numeric(" 461 ", findAndReplace(Message::numericsMap[ERR_NEEDMOREPARAMS], "<command>", "JOIN"));
-	if (message.get_params()[0][0] == '0')
+	if (message.get_params()[0] == "0")
 		return cmd_part(message);
 	channelNames = stringDelimiter(message.get_params()[0], ",");
 	for (size_t i = 0; i < channelNames.size(); i++)
 	{
-		if (channelNames[i].size() < 2 || channelNames[i].size() > CHANNELNAMELEN || channelNames[i][0] != '#' || channelNames[i].find_first_of(" ,\x07") != std::string::npos)
+		if (channelNames[i].size() < 1 || channelNames[i].size() > CHANNELNAMELEN || channelNames[i][0] != '#' || channelNames[i].find_first_of(" ,\x07") != std::string::npos)
 			message.send_numeric(" 476 ", Message::numericsMap[ERR_BADCHANMASK]);
 		else if (user->get_channels().size() < MAXCHANNELS)
 		{
@@ -22,6 +22,8 @@ void	cmd_join(Message &message)
 			pair = message.get_server().addChannel(newChannel);
 			if (pair.second == false)
 				delete newChannel;
+			else
+				std::cout << CHANNEL_YELLOW "Channel " RESET_COLOR << channelNames[i] << CHANNEL_YELLOW " created by " << *user << std::endl;
 			if (pair.second == true || pair.first->second->add_user(user) == true)
 			{
 				user->add_channel(pair.first->second);
