@@ -28,6 +28,8 @@
 # define PINGTIMEOUT	90
 # define TIMEOUT		45
 
+# define PONG_STR		"server"
+
 # define RESET_COLOR	"\033[0m"
 # define MASK_BLUE		"\033[1;34m"
 # define INFO_GREEN		"\033[1;32m"

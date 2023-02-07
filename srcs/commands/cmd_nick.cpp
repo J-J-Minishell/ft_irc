@@ -37,6 +37,6 @@ void	cmd_nick(Message &message)
 	}
 
 	if (!user.isRegistered() && user.get_username() != "unknown" && user.get_nick() != "*")
-		send_all(&user, "PING :irc-serv\r\n");
+		send_all(&user, "PING :" PONG_STR "\r\n");
 }
    

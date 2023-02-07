@@ -16,9 +16,12 @@ void	cmd_pong(Message &message)
 	User		&user = *message.get_user();
 	std::string	line;
 
-	if (!user.isRegistered() && user.get_nick() != "*" && user.get_username() != "unknown")
-		message.welcome_user();
+	if (!message.get_params().empty() && message.get_params()[0] == PONG_STR)
+	{
+		if (!user.isRegistered() && user.get_nick() != "*" && user.get_username() != "unknown")
+			message.welcome_user();
 
-	user.reset_time();
-	user.set_timeout(0);
+			user.reset_time();
+			user.set_timeout(0);
+	}
 }

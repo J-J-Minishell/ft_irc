@@ -267,7 +267,7 @@ int	Server::_checkTime(User *user)
 		if (!user->get_timeout() && (user->get_time() + PINGTIMEOUT < time(NULL)))
 		{
 			user->set_timeout(time(NULL) + TIMEOUT);
-			send_all(user, "PING irc-serv\r\n");
+			send_all(user, "PING " PONG_STR "\r\n");
 		}
 		else if (user->get_timeout() && user->get_timeout() < time(NULL))
 		{
