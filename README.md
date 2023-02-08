@@ -43,6 +43,14 @@ PONG server
 This following list of commands are handled on our server:
 
 ```
+- PASS
+- NICK
+- USER
+- PING
+- PONG
+- QUIT
+- NOTICE
+- PRIVMSG
 - JOIN
 - KICK
 - LIST
@@ -50,12 +58,7 @@ This following list of commands are handled on our server:
 - PART
 - NICK
 - OPER
-- QUIT
-- USER
-- PING
-- PONG
-- NOTICE
-- PRIVMSG
+- DIE
 ```
 
 ## Subject pdf
