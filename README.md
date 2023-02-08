@@ -68,9 +68,9 @@ This following list of commands are handled on our server:
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/baringo11/"><img src="https://avatars.githubusercontent.com/u/57132782?s=400&v=4" width="100px;" alt=""/><br /><sub><b>baringo11 (jbaringo)</b></a></td>
-    <td align="center"><a href="https://github.com/jgalian/"><img src="https://avatars.githubusercontent.com/u/62511524?v=4" width="100px;" alt=""/><br /><sub><b>jgalian (jgalian-)</b></a></td>
-    <td align="center"><a href="https://github.com/ccardozom/"><img src="https://avatars.githubusercontent.com/u/54796906?v=4" width="100px;" alt=""/><br /><sub><b>ccardozom (ccardozo)</b></a></td>
+    <td align="center"><a href="https://github.com/baringo11/"><img src="https://avatars.githubusercontent.com/u/57132782?s=400&v=4" width="100px;" alt=""/><br /><sub><b>baringo11 (jbaringo)</b></sub></a><br /> <br /><a href="https://profile.intra.42.fr/users/jbaringo" title="Intra 42"><img src="https://img.shields.io/badge/Madrid-FFFFFF?style=plastic&logo=42&logoColor=000000" alt="Intra 42"/></a></td>
+    <td align="center"><a href="https://github.com/jgalian/"><img src="https://avatars.githubusercontent.com/u/62511524?v=4" width="100px;" alt=""/><br /><sub><b>jgalian (jgalian-)</b></sub></a><br /> <br /><a href="https://profile.intra.42.fr/users/jgalian-" title="Intra 42"><img src="https://img.shields.io/badge/Madrid-FFFFFF?style=plastic&logo=42&logoColor=000000" alt="Intra 42"/></a></td>
+    <td align="center"><a href="https://github.com/ccardozom/"><img src="https://avatars.githubusercontent.com/u/54796906?v=4" width="100px;" alt=""/><br /><sub><b>ccardozom (ccardozo)</b></sub></a><br /> <br /><a href="https://profile.intra.42.fr/users/ccardozo" title="Intra 42"><img src="https://img.shields.io/badge/Madrid-FFFFFF?style=plastic&logo=42&logoColor=000000" alt="Intra 42"/></a></td>
   </tr>
 </table>
 <!-- markdownlint-restore -->
